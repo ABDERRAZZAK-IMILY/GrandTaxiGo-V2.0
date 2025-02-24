@@ -15,7 +15,22 @@
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
+        <!-- Role -->
+        <div class="mt-4">
+            <x-input-label for="role" :value="__('Role')" />
+            <select id="role" name="role" class="block mt-1 w-full" required>
+            <option value="passenger">{{ __('passenger') }}</option>
+            <option value="driver">{{ __('driver') }}</option>
+            </select>
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
+        </div>
 
+        <!-- Profile Picture -->
+        <div class="mt-4">
+            <x-input-label for="profile_picture" :value="__('Profile Picture')" />
+            <x-text-input id="profile_picture" class="block mt-1 w-full" type="file" name="profile_picture" accept="image/*" />
+            <x-input-error :messages="$errors->get('profile_picture')" class="mt-2" />
+        </div>
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
