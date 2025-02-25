@@ -50,7 +50,7 @@ class TripController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**

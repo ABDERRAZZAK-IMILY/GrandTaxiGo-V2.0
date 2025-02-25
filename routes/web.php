@@ -3,7 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TripController;
+use App\Models\Reservation;
 use App\Models\Trip;
+
+use App\Http\Controllers\ReservationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,3 +34,5 @@ Route::post('/lop', [TripController::class, 'store'])->name('trip.store')->middl
 Route::post('/trip/update-availability', [TripController::class, 'updateAvailability'])->name('trip.updateAvailability');
 
 Route::get('/trip/driverProfile/{id}', [TripController::class, 'showDriverProfile'])->name('trip.driverProfile');
+
+Route::get(('trajet') , [ReservationController::class, 'index'])->name('reservation.index');

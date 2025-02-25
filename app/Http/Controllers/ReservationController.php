@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Reservation;
+use App\Models\Trip;
 use Illuminate\Support\Facades\Auth;
 class ReservationController extends Controller
 {
@@ -13,8 +14,8 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        Reservation::all();
-        return view('reservation.index');
+        $trips =   Trip::all();
+        return view('reservation.index' , compact('trips'));
     }
 
     /**
