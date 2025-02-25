@@ -30,3 +30,4 @@ Route::post('/lop', [TripController::class, 'store'])->name('trip.store')->middl
 
 Route::post('/trip/update-availability', [TripController::class, 'updateAvailability'])->name('trip.updateAvailability');
 
+Route::get('/trip/driverProfile/{id}', [TripController::class, 'showDriverProfile'])->name('trip.driverProfile');

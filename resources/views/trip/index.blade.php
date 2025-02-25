@@ -95,7 +95,6 @@
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">From</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">To</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -105,26 +104,9 @@
                                 <td class="px-6 py-4">Downtown</td>
                                 <td class="px-6 py-4">Shopping Mall</td>
                                 <td class="px-6 py-4"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span></td>
-                                <td class="px-6 py-4">$25.00</td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
-
-            <!-- Statistics -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h3 class="text-gray-500 text-sm font-medium">Today's Earnings</h3>
-                    <p class="text-2xl font-bold">$150.00</p>
-                </div>
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h3 class="text-gray-500 text-sm font-medium">Completed Trips</h3>
-                    <p class="text-2xl font-bold">12</p>
-                </div>
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h3 class="text-gray-500 text-sm font-medium">Rating</h3>
-                    <p class="text-2xl font-bold">4.8/5.0</p>
                 </div>
             </div>
         </div>

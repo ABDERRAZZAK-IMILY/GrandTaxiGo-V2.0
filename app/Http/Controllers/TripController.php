@@ -77,6 +77,12 @@ class TripController extends Controller
         //
     }
 
+    public function showDriverProfile($id)
+    {
+         $driver = \App\Models\User::find($id);
+        return view('trip.profile', compact('driver'));
+    }
+
 
 
 
