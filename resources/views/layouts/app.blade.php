@@ -15,22 +15,33 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div class="min-h-screen bg-gradient-to-b from-yellow-400 via-yellow-300 to-yellow-200">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+                <header class="bg-black/80 shadow-lg">
+                    <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+                        <div class="text-yellow-400 font-bold text-xl">
+                            {{ $header }}
+                        </div>
                     </div>
                 </header>
             @endisset
 
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
+            <main class="container mx-auto px-4 py-8">
+                <div class="bg-white/90 rounded-lg shadow-xl p-6">
+                    {{ $slot }}
+                </div>
             </main>
+
+            <!-- Footer -->
+            <footer class="bg-black/80 text-yellow-400 py-4 mt-8">
+                <div class="container mx-auto text-center">
+                    <p>&copy; {{ date('Y') }} GrandTaxiGo. All rights reserved.</p>
+                </div>
+            </footer>
         </div>
     </body>
 </html>

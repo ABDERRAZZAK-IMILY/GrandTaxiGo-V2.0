@@ -41,6 +41,8 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'profile_picture' => $request->file('profile_picture') ? $request->file('profile_picture')->store('profile-pictures') : null,
+            'role' => $request->role
         ]);
 
         event(new Registered($user));
