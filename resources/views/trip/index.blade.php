@@ -65,54 +65,7 @@
         </span>
     </label>
 </div>
-            <!-- Pending Reservations -->
-            <div class="mb-6">
-                <h2 class="text-lg font-semibold mb-3">Pending Reservations</h2>
-                <div class="bg-white shadow rounded-lg overflow-hidden">
-                    <div class="divide-y divide-gray-200">
-                        <!-- Reservation items will be dynamically loaded here -->
-                        <div class="p-4 flex justify-between items-center">
-                            <div>
-                                <p class="font-medium">Pickup: Central Station</p>
-                                <p class="text-sm text-gray-600">Destination: Airport</p>
-                                <p class="text-sm text-gray-600">Date: 2024-01-20 14:30</p>
-                            </div>
-                            <div class="space-x-2">
-                                <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Accept</button>
-                                <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Decline</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Trip History -->
-            <div class="mb-6">
-                <h2 class="text-lg font-semibold mb-3">Trip History</h2>
-                <div class="bg-white shadow rounded-lg overflow-hidden">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">From</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">To</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            <!-- Trip history items will be dynamically loaded here -->
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap">2024-01-19</td>
-                                <td class="px-6 py-4">Downtown</td>
-                                <td class="px-6 py-4">Shopping Mall</td>
-                                <td class="px-6 py-4"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+           
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
