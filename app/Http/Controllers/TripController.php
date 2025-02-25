@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Trip;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class TripController extends Controller
@@ -11,7 +13,8 @@ class TripController extends Controller
      */
     public function index()
     {
-        //
+     
+         return view('trip.index');
     }
 
     /**
@@ -19,7 +22,8 @@ class TripController extends Controller
      */
     public function create()
     {
-        //
+       
+
     }
 
     /**
@@ -27,7 +31,17 @@ class TripController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'departure_location' => 'required|string',
+            'destination' => 'required|string',
+            'departure_time' => 'required|date',
+            'available_seats' => 'required|integer',
+        ]);
+
+        $data['driver_id'] = Auth::id();
+        Trip::create($data);
+
+        return redirect()->back()->with('success', 'Trip created successfully');
     }
 
     /**

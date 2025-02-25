@@ -15,9 +15,6 @@ class Trip extends Model
         'driver_id', 'departure_location', 'destination', 'departure_time', 'available_seats'
     ];
 
-   
-    
-
 
     public function driver() {
         return $this->belongsTo(User::class, 'driver_id');

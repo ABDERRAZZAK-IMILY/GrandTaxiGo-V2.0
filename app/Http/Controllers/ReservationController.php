@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Reservation;
+use Illuminate\Support\Facades\Auth;
 class ReservationController extends Controller
 {
     /**
@@ -11,7 +13,8 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        //
+        Reservation::all();
+        return view('reservation.index');
     }
 
     /**
@@ -19,7 +22,8 @@ class ReservationController extends Controller
      */
     public function create()
     {
-        //
+        
+        
     }
 
     /**
@@ -27,7 +31,16 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $data = $request->validate([
+            'trip_id' => 'required|integer',
+            'status' => 'required|string',
+        ]);
+
+        $data['user_id'] = Auth::id();
+        Reservation::create($data);
+
+        return redirect()->back()->with('success', 'Reservation created successfully');
+
     }
 
     /**
@@ -35,7 +48,8 @@ class ReservationController extends Controller
      */
     public function show(string $id)
     {
-        //
+        Reservation::find($id);
+
     }
 
     /**
