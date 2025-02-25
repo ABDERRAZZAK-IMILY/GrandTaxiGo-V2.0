@@ -6,6 +6,7 @@ use App\Models\Trip;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
+
 class TripController extends Controller
 {
     /**
@@ -75,4 +76,19 @@ class TripController extends Controller
     {
         //
     }
+
+
+
+
+public function updateAvailability(Request $request)
+{
+     /** @var \App\Models\User $user */
+    $user = Auth::user();
+    $user->is_available = $request->is_available;
+    $user->save();
+
+    return response()->json(['success' => true, 'status' => $user->is_available]);
+
+}
+
 }

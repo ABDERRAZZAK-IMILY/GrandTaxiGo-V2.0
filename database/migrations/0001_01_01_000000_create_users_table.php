@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamps();
             $table->enum('role', ['passenger', 'driver'])->default('passenger');
             $table->string('profile_picture')->nullable();
+            $table->boolean('is_available')->default(0);
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -47,5 +48,6 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        
     }
 };

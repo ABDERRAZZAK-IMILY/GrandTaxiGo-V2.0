@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TripController;
+use App\Models\Trip;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,3 +25,8 @@ require __DIR__.'/auth.php';
 Route::get('/lop', [TripController::class, 'index'])->name('trip.index')->middleware('auth');
 Route::get('/lop/create', [TripController::class, 'create'])->name('trip.create')->middleware('auth');
 Route::post('/lop', [TripController::class, 'store'])->name('trip.store')->middleware('auth');
+
+
+
+Route::post('/trip/update-availability', [TripController::class, 'updateAvailability'])->name('trip.updateAvailability');
+
