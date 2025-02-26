@@ -6,7 +6,6 @@
             {{ __('Réservations') }}
         </h2>
     </x-slot>
-
     <div class="container mx-auto p-4">
         <h2 class="text-2xl font-bold mb-4">Trajets Disponibles</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -14,15 +13,16 @@
             <form action="{{route('reservation.store')}}" method="POST">
                 @csrf
                 <input type="hidden" name="trip_id" value="{{ $trip->id }}">
+                <input type="hidden" name="available_seats" value="{{ $trip->available_seats }}">
+
 
             <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
                     <div class="flex justify-between items-center mb-4">
                         <span class="text-sm text-gray-500" name="trip_id">Trajet #{{ $trip->id }}</span>
-                        <span class="px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800">
-                            {{ $trip->seats_available }} places disponibles
+                        <span class="px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800" name="seats_available">
+                            {{ $trip->seats_available }} disponibles
                         </span>
                     </div>
-                    
                     <div class="space-y-3">
                         <div class="flex items-center">
                             <svg class="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -45,7 +45,11 @@
                             <span class="text-gray-700">{{ $trip->departure_time }}</span>
                         </div>
                     </div>
-
+                    <div class="flex items-center">
+                    <svg  class="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 18v3h3v-3h10v3h3v-6H4zm15-8h3v3h-3zM2 10h3v3H2zm15 3H7V5c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v8z"/></svg>
+                    <span  name="available_seats"  class="text-gray-700">{{ $trip->available_seats}}</span>
+  
+                </div>
                     <div class="mt-4">
                     <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600  font-semibold py-2 px-4 rounded-lg transition duration-300">
                         Réserver

@@ -31,18 +31,32 @@ class ReservationController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-       $data = $request->validate([
-            'trip_id' => 'required|integer'
-        ]);
+{
+    $seats = $request['available_seats'];
 
-        $data['user_id'] = Auth::id();
-        
-        Reservation::create($data);
+    $data = $request->validate([
+        'trip_id' => 'required|integer'
+    ]);
 
-        return redirect()->back()->with('success', 'Reservation created successfully');
+    $data['user_id'] = Auth::id();
 
+    if ($seats > 0) {
+        if (Reservation::create($data)) {
+            $seats--;
+
+            $trip = Trip::find($data['trip_id']);
+            if ($trip) {
+                $trip->available_seats = $seats;
+                $trip->save();
+            }
+
+            return redirect()->back()->with('success', 'Reservation created successfully');
+        }
     }
+
+    return redirect()->back()->with('error', 'No available seats left');
+}
+
 
     /**
      * Display the specified resource.
