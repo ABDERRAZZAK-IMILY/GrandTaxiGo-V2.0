@@ -33,11 +33,11 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
        $data = $request->validate([
-            'trip_id' => 'required|integer',
-            'status' => 'required|string',
+            'trip_id' => 'required|integer'
         ]);
 
         $data['user_id'] = Auth::id();
+        
         Reservation::create($data);
 
         return redirect()->back()->with('success', 'Reservation created successfully');

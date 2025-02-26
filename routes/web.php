@@ -36,3 +36,5 @@ Route::post('/trip/update-availability', [TripController::class, 'updateAvailabi
 Route::get('/trip/driverProfile/{id}', [TripController::class, 'showDriverProfile'])->name('trip.driverProfile');
 
 Route::get(('trajet') , [ReservationController::class, 'index'])->name('reservation.index');
+
+Route::post('/reservation' , [ReservationController::class , 'store'])->name('reservation.store');

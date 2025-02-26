@@ -11,13 +11,13 @@
         <h2 class="text-2xl font-bold mb-4">Trajets Disponibles</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             @foreach($trips as $trip)
-            <form action="" method="POST">
+            <form action="{{route('reservation.store')}}" method="POST">
                 @csrf
                 <input type="hidden" name="trip_id" value="{{ $trip->id }}">
 
             <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
                     <div class="flex justify-between items-center mb-4">
-                        <span class="text-sm text-gray-500">Trajet #{{ $trip->id }}</span>
+                        <span class="text-sm text-gray-500" name="trip_id">Trajet #{{ $trip->id }}</span>
                         <span class="px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800">
                             {{ $trip->seats_available }} places disponibles
                         </span>
