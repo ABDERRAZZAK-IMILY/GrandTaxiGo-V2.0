@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
 use App\Models\Trip;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -75,6 +76,14 @@ class TripController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function showHistoryTrip(){
+
+         $pendingReservations = Reservation::all();
+         $tripHistory = Trip::all();
+
+        return view('trip.history' , compact('pendingReservations') , compact('tripHistory'));
     }
 
     public function showDriverProfile($id)

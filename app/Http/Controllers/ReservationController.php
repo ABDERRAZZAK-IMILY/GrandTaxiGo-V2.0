@@ -78,10 +78,29 @@ class ReservationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+
+
+     public function acceptReservation(Request $request)
+     {
+         $validated = $request->validate([
+             'reservation_id' => 'required|integer',
+             'status' => 'required|string',
+         ]);
+     
+         $reservation = Reservation::find($validated['reservation_id']);
+     
+         if ($reservation) {
+             $reservation->status = "accepted";
+             $reservation->save();
+     
+             return redirect()->back()->with('success', 'Reservation accepted successfully');
+         } else {
+             return redirect()->back()->with('error', 'Reservation not found');
+         }
+     }
+     
+     
+
 
     /**
      * Remove the specified resource from storage.

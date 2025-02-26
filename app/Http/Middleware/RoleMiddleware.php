@@ -16,7 +16,7 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next ,$role): Response
     {
-        if (!Auth::check() || Auth::user()->role !== $role) {
+        if (Auth::user()->role !== $role) {
             return redirect('/home')->with('error', 'you dont have access to this page');
         }
         return $next($request);

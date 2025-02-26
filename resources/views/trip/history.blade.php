@@ -1,4 +1,5 @@
- <!-- Pending Reservations -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Pending Reservations -->
  <div class="mb-6">
                 <h2 class="text-lg font-semibold mb-3">Pending Reservations</h2>
                 <div class="bg-white shadow rounded-lg overflow-hidden">
@@ -8,16 +9,19 @@
                                 <div>
                                     <p class="font-medium">Pickup: {{ $reservation->departure_location }}</p>
                                     <p class="text-sm text-gray-600">Destination: {{ $reservation->destination }}</p>
-                                    <p class="text-sm text-gray-600">Date: {{ $reservation->departure_time }}</p>
+                                    <p class="text-sm text-gray-600">Date: {{ $reservation->departure_time}}</p>
+                                    <p class="text-sm text-gray-600">: {{ $reservation->status}}</p>
+
                                 </div>
                                 <div class="space-x-2">
-                                    <form action="{{ route('reservation.update', $reservation) }}" method="POST" class="inline">
-                                        @csrf
+                                <form action="{{ route('accept') }}" method="POST" class="inline">                                     
+                                       @csrf
                                         @method('PATCH')
+                                        <input type="hidden" , name="reservation_id" value="{{$reservation->id}}">
                                         <input type="hidden" name="status" value="accepted">
                                         <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Accept</button>
                                     </form>
-                                    <form action="{{ route('reservation.update', $reservation) }}" method="POST" class="inline">
+                                    <form action="" method="POST" class="inline">
                                         @csrf
                                         @method('PATCH')
                                         <input type="hidden" name="status" value="declined">
@@ -48,7 +52,7 @@
                         <tbody class="bg-white divide-y divide-gray-200">
                             @forelse($tripHistory as $trip)
                                 <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $trip->departure_time->format('Y-m-d') }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $trip->departure_time }}</td>
                                     <td class="px-6 py-4">{{ $trip->departure_location }}</td>
                                     <td class="px-6 py-4">{{ $trip->destination }}</td>
                                     <td class="px-6 py-4">
