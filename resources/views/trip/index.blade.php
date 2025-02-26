@@ -34,6 +34,13 @@
                     <input type="date" name="departure_time" id="date" required
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                 </div>
+                
+                <div>
+                    <label for="date" class="block text-sm font-medium text-gray-700">Time</label>
+                    <input type="time" name="time" id="time" required
+                        class=" focus:ring-yellow-500 focus:border-yellow-500  mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                </div>
+                
                 <!-- Number of Seats -->
                 <div>
                     <label for="seats" class="block text-sm font-medium text-gray-700">Available Seats</label>

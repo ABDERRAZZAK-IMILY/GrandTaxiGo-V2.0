@@ -1,38 +1,57 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>GrandTaxiGo - Réservation de Grands Taxis</title>
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <script src="https://cdn.tailwindcss.com"></script>
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <!-- Hero Section with improved gradient -->
-        <div class="relative min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-            <!-- Enhanced Header -->
-            <header class="fixed w-full z-50 backdrop-blur-md bg-white/90 dark:bg-gray-900/90 shadow-lg">
-                <div class="container mx-auto px-6 py-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-2">
-                            <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-10 w-auto">
-                            <span class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text hover:scale-105 transition-transform">
-                                GrandTaxiGo
-                            </span>
-                        </div>
-                        
-                        <!-- Improved Navigation -->
-                        <nav class="hidden md:flex space-x-8">
-                            <a href="#" class="text-gray-600 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 transition-colors duration-300 font-medium">Accueil</a>
-                            <a href="#services" class="text-gray-600 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 transition-colors duration-300 font-medium">Services</a>
-                            <a href="#about" class="text-gray-600 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 transition-colors duration-300 font-medium">À propos</a>
-                            <a href="#contact" class="text-gray-600 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 transition-colors duration-300 font-medium">Contact</a>
-                        </nav>
-
-                        <!-- Enhanced Auth Buttons -->
-                        <div class="flex items-center space-x-4">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRANGTAXIGO - Book Your Taxi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/all.min.js"></script>
+  <style>
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .float {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    .taxi-drive {
+      transition: transform 0.5s ease-in-out;
+    }
+    
+    .taxi-drive:hover {
+      transform: translateX(20px);
+    }
+    
+    .city-bg {
+      background-image: url('/api/placeholder/800/200');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans min-h-screen">
+  <!-- Navbar -->
+  <nav class="bg-yellow-500 text-white shadow-lg">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <div class="taxi-drive text-3xl font-bold">
+          <i class="fas fa-taxi mr-2"></i>GRANGTAXIGO
+        </div>
+      </div>
+      <div class="hidden md:flex space-x-8 text-lg">
+        <a href="#" class="hover:text-yellow-200 transition-colors duration-300">Home</a>
+        <a href="#" class="hover:text-yellow-200 transition-colors duration-300">Services</a>
+        <a href="#" class="hover:text-yellow-200 transition-colors duration-300">About</a>
+        <a href="#" class="hover:text-yellow-200 transition-colors duration-300">Contact</a>
+      </div>
+      <div>
+        <!-- Enhanced Auth Buttons -->
+        <div class="flex items-center space-x-4">
                             @if (Route::has('login'))
                                 @auth
                                     <a href="{{ url('/dashboard') }}" class="btn-primary">
@@ -50,93 +69,214 @@
                                 @endauth
                             @endif
                         </div>
-                    </div>
-                </div>
-            </header>
+      </div>
+    </div>
+  </nav>
 
-            <!-- Enhanced Hero Section -->
-            <div class="relative pt-32 pb-32 flex content-center items-center justify-center min-h-screen">
-                <div class="container mx-auto px-4">
-                    <div class="flex flex-wrap items-center">
-                        <div class="w-full md:w-6/12 px-4 animate-fade-in-left">
-                            <h1 class="text-5xl font-bold mb-6 bg-gradient-to-r from-indigo-900 to-purple-900 dark:from-indigo-400 dark:to-purple-400 text-transparent bg-clip-text leading-tight">
-                                Réservez votre Grand Taxi en quelques clics
-                            </h1>
-                            <p class="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-                                Voyagez en toute simplicité avec GrandTaxiGo. 
-                                Une nouvelle façon de réserver votre taxi, plus rapide et plus sûre.
-                            </p>
-                            <div class="flex space-x-4">
-                                <a href="#reserver" class="btn-primary animate-bounce">
-                                    Réserver maintenant
-                                </a>
-                                <a href="#services" class="btn-secondary">
-                                    En savoir plus
-                                </a>
-                            </div>
-                        </div>
-                        <div class="w-full md:w-6/12 px-4 animate-fade-in-right">
-                            <div class="relative">
-                                <img src="{{ asset('images/taxi-hero.jpg') }}" alt="Taxi" class="rounded-2xl shadow-2xl hover:scale-105 transition-transform duration-500 object-cover">
-                                <div class="absolute -bottom-4 -right-4 bg-indigo-600 text-white px-6 py-3 rounded-lg shadow-lg">
-                                    24/7 Disponible
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <!-- Hero Section -->
+  <div class="relative overflow-hidden bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-white">
+    <div class="container mx-auto px-4 py-16 md:py-24">
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div class="space-y-6 z-10">
+          <h1 class="text-4xl md:text-6xl font-extrabold leading-tight" id="hero-text">
+            Your Ride, <br>
+            <span class="text-black">Just a Tap Away</span>
+          </h1>
+          <p class="text-lg md:text-xl opacity-90">
+            Fast, reliable, and comfortable taxi service available 24/7. Book your ride now and enjoy the journey!
+          </p>
+          <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+            <button class="bg-black hover:bg-gray-800 text-white px-8 py-3 rounded-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg">
+              Book Now
+            </button>
+            <button class="bg-white hover:bg-gray-100 text-yellow-500 px-8 py-3 rounded-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg">
+              Learn More
+            </button>
+          </div>
         </div>
+        <div class="relative">
+          <div class="float">
+            <img src="https://purepng.com/public/uploads/large/purepng.com-ford-mustang-red-carcarvehicletransportford-961524641401fbblv.png" alt="Taxi illustration" class="rounded-lg shadow-2xl mx-auto max-w-full h-auto">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Animated shapes -->
+    <div class="absolute top-20 right-20 w-20 h-20 bg-white opacity-10 rounded-full float" style="animation-delay: 0.5s;"></div>
+    <div class="absolute bottom-10 left-10 w-32 h-32 bg-white opacity-10 rounded-full float" style="animation-delay: 1s;"></div>
+    <div class="absolute top-40 left-40 w-16 h-16 bg-white opacity-10 rounded-full float" style="animation-delay: 1.5s;"></div>
+  </div>
+  <!-- Features Section -->
+  <div class="container mx-auto px-4 py-16">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Why Choose GRANGTAXIGO?</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-white p-6 rounded-xl shadow-lg transition-transform duration-300 hover:transform hover:scale-105">
+        <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4 mx-auto">
+          <i class="fas fa-bolt text-yellow-500 text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-bold text-center mb-2">Fast Pickup</h3>
+        <p class="text-gray-600 text-center">Our drivers will reach you within minutes of booking your ride.</p>
+      </div>
+      
+      <div class="bg-white p-6 rounded-xl shadow-lg transition-transform duration-300 hover:transform hover:scale-105">
+        <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4 mx-auto">
+          <i class="fas fa-shield-alt text-yellow-500 text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-bold text-center mb-2">Safe Journey</h3>
+        <p class="text-gray-600 text-center">All our drivers are verified and trained for your safety.</p>
+      </div>
+      
+      <div class="bg-white p-6 rounded-xl shadow-lg transition-transform duration-300 hover:transform hover:scale-105">
+        <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4 mx-auto">
+          <i class="fas fa-tag text-yellow-500 text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-bold text-center mb-2">Affordable Rates</h3>
+        <p class="text-gray-600 text-center">Enjoy competitive pricing with no hidden charges.</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Testimonials -->
+  <div class="container mx-auto px-4 py-16">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">What Our Customers Say</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-white p-6 rounded-xl shadow-lg">
+        <div class="flex justify-center mb-4">
+          <div class="text-yellow-500">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+        </div>
+        <p class="text-gray-600 text-center mb-4">"GRANGTAXIGO never disappoints! My driver arrived within 3 minutes and got me to my destination safely and on time."</p>
+        <div class="flex items-center justify-center">
+          <div class="w-10 h-10 bg-gray-200 rounded-full mr-3"></div>
+          <div>
+            <h4 class="font-bold">Sarah Johnson</h4>
+            <p class="text-sm text-gray-500">Regular Customer</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-white p-6 rounded-xl shadow-lg">
+        <div class="flex justify-center mb-4">
+          <div class="text-yellow-500">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+        </div>
+        <p class="text-gray-600 text-center mb-4">"The app is so easy to use, and the drivers are always professional. Best taxi service in the city!"</p>
+        <div class="flex items-center justify-center">
+          <div class="w-10 h-10 bg-gray-200 rounded-full mr-3"></div>
+          <div>
+            <h4 class="font-bold">Michael Brown</h4>
+            <p class="text-sm text-gray-500">Business Traveler</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-white p-6 rounded-xl shadow-lg">
+        <div class="flex justify-center mb-4">
+          <div class="text-yellow-500">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+        </div>
+        <p class="text-gray-600 text-center mb-4">"I love the fare estimator feature. No surprises, and the prices are always reasonable. Highly recommend!"</p>
+        <div class="flex items-center justify-center">
+          <div class="w-10 h-10 bg-gray-200 rounded-full mr-3"></div>
+          <div>
+            <h4 class="font-bold">Emily Chen</h4>
+            <p class="text-sm text-gray-500">Student</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-xl font-bold mb-4">GRANGTAXIGO</h3>
+          <p class="text-gray-400">Your trusted partner for safe and reliable taxi services. Available 24/7 for all your transportation needs.</p>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Home</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Services</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-4">Services</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">City Taxi</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Airport Transfer</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Corporate Travel</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Event Transportation</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-4">Contact Us</h3>
+          <ul class="space-y-2">
+            <li class="flex items-center"><i class="fas fa-map-marker-alt mr-2"></i> 123 Taxi Street, City</li>
+            <li class="flex items-center"><i class="fas fa-phone mr-2"></i> +1 (555) 123-4567</li>
+            <li class="flex items-center"><i class="fas fa-envelope mr-2"></i> info@quickride.com</li>
+          </ul>
+          <div class="mt-4 flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+        <p>&copy; 2025 QuickRide. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
 
-        <!-- Enhanced Features Section -->
-        <section id="services" class="py-20 bg-gradient-to-b from-white to-blue-50 dark:from-gray-800 dark:to-gray-900">
-            <div class="container mx-auto px-4">
-                <h2 class="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-indigo-900 to-purple-900 dark:from-indigo-400 dark:to-purple-400 text-transparent bg-clip-text">
-                    Pourquoi choisir GrandTaxiGo ?
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Enhanced Feature Cards -->
-                    <div class="feature-card">
-                        <div class="text-indigo-600 mb-4">
-                            <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
-                                <!-- Add your SVG path here -->
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-semibold mb-4 text-indigo-600 dark:text-indigo-400">Réservation Facile</h3>
-                        <p class="text-gray-600 dark:text-gray-300">Réservez votre trajet en quelques clics depuis notre plateforme intuitive.</p>
-                    </div>
-                    <!-- Add more feature cards similarly -->
-                </div>
-            </div>
-        </section>
-
-        <style>
-            /* Enhanced Animations */
-            @keyframes fade-in-left {
-                0% { opacity: 0; transform: translateX(-20px); }
-                100% { opacity: 1; transform: translateX(0); }
-            }
-            @keyframes fade-in-right {
-                0% { opacity: 0; transform: translateX(20px); }
-                100% { opacity: 1; transform: translateX(0); }
-            }
-            .animate-fade-in-left {
-                animation: fade-in-left 1s ease-out;
-            }
-            .animate-fade-in-right {
-                animation: fade-in-right 1s ease-out;
-            }
-            
-            /* Custom Classes */
-            .btn-primary {
-                @apply inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition-all duration-300 hover:scale-105 transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-md;
-            }
-            .btn-secondary {
-                @apply inline-flex items-center px-6 py-3 border border-indigo-200 text-base font-medium rounded-lg text-indigo-700 bg-white hover:bg-indigo-50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:scale-105 shadow-md;
-            }
-            .feature-card {
-                @apply bg-white dark:bg-gray-700 rounded-xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2;
-            }
-        </style>
-    </body>
+  <!-- Animation Script -->
+  <script>
+    // Animate hero text on load
+    window.addEventListener('DOMContentLoaded', () => {
+      gsap.from("#hero-text", {
+        duration: 1, 
+        y: 50, 
+        opacity: 0, 
+        ease: "power3.out" 
+      });
+      
+      // Animate features on scroll
+      const features = document.querySelectorAll('.grid > div');
+      gsap.from(features, {
+        duration: 0.8,
+        y: 50,
+        opacity: 0,
+        stagger: 0.2,
+        scrollTrigger: {
+          trigger: features[0],
+          start: "top 80%"
+        }
+      });
+    });
+  </script>
+</body>
 </html>
