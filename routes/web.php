@@ -5,14 +5,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TripController;
 
 use App\Http\Controllers\ReservationController;
+use App\Models\Trip;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [TripController::class, 'index'])->middleware(['auth', 'verified'])->middleware('role:driver')->name('dashboard');
+
+Route::get(('/dashboard') , [ReservationController::class, 'index'])->middleware(['auth', 'verified'])->middleware('role:passenger')->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -37,7 +40,6 @@ Route::get('/trip/history', [TripController::class, 'showHistoryTrip'])
 
 Route::get('/trip/driverProfile/{id}', [TripController::class, 'showDriverProfile'])->name('trip.driverProfile');
 
-Route::get(('trajet') , [ReservationController::class, 'index'])->name('reservation.index');
 
 Route::post('/trajet' , [ReservationController::class , 'store'])->name('reservation.store');
 
@@ -57,5 +59,14 @@ Route::get('/test' , function() {
     $current = Carbon::now();
 
     echo $current;
+
+});
+
+
+Route::get('/a/{id}' , function($id) {
+
+$user = Trip::find($id);
+
+dd($user->reservations);
 
 });
