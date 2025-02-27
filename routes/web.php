@@ -14,7 +14,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [TripController::class, 'index'])->middleware(['auth', 'verified'])->middleware('role:driver')->name('dashboard');
 
-Route::get(('/dashboard') , [ReservationController::class, 'index'])->middleware(['auth', 'verified'])->middleware('role:passenger')->name('dashboard');
+Route::get(('/dashboardpassenger') , [ReservationController::class, 'index'])->middleware(['auth', 'verified'])->middleware('role:passenger')->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {

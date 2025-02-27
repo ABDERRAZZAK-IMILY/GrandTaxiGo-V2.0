@@ -31,13 +31,15 @@
                 <!-- Date -->
                 <div>
                     <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
-                    <input type="date" name="departure_time" id="date" required
+                    <input type="date" name="" id="date" required
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                 </div>
+
+                <input type="hidden" name="departure_time" id="timestamp">
                 
                 <div>
                     <label for="date" class="block text-sm font-medium text-gray-700">Time</label>
-                    <input type="time" name="time" id="time" required
+                    <input type="time" name="" id="time" required
                         class=" focus:ring-yellow-500 focus:border-yellow-500  mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                 </div>
                 
@@ -99,6 +101,18 @@
             .catch(error => console.error('Error:', error));
         });
     });
+
+
+    document.getElementById('date').addEventListener('change', updateTimestamp);
+    document.getElementById('time').addEventListener('change', updateTimestamp);
+
+    function updateTimestamp() {
+        const date = document.getElementById('date').value;
+        const time = document.getElementById('time').value;
+        if (date && time) {
+            document.getElementById('timestamp').value = date + ' ' + time;
+        }
+    }
 </script>
 
 </x-app-layout>

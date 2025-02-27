@@ -10,7 +10,7 @@
 @endif
 
     <x-slot name="header">
-        <h2 class="text-xl font-semibold leading-tight text-gray-800">
+        <h2 class="text-xl font-semibold leading-tight text-red-300">
             {{ __('Réservations') }}
         </h2>
     </x-slot>
@@ -27,9 +27,6 @@
             <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
                     <div class="flex justify-between items-center mb-4">
                         <span class="text-sm text-gray-500" name="trip_id">Trajet #{{ $trip->id }}</span>
-                     
-
-                                  
 
                                  @if ( $trip->available_seats > 0 )
                                  <span class="px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800" name="seats_available">disponibles</span>
