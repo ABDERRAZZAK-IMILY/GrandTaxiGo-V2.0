@@ -41,7 +41,7 @@ Route::get(('trajet') , [ReservationController::class, 'index'])->name('reservat
 
 Route::post('/trajet' , [ReservationController::class , 'store'])->name('reservation.store');
 
-Route::post('/trip/history', [ReservationController::class, 'acceptReservation'])->name('accept');
+Route::post('/accept', [ReservationController::class, 'acceptReservation'])->name('accept');
 
 Route::post('/reservation' , [ReservationController::class , 'rejectResevation'])->name('reservation.reject');
 

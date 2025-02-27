@@ -16,14 +16,12 @@
                                 <div class="space-x-2">
                                 <form action="{{ route('accept') }}" method="POST" class="inline">                                     
                                        @csrf
-                                        @method('PATCH')
                                         <input type="hidden" , name="reservation_id" value="{{$reservation->id}}">
                                         <input type="hidden" name="status" value="accepted">
                                         <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Accept</button>
                                     </form>
                                     <form action="" method="POST" class="inline">
                                         @csrf
-                                        @method('PATCH')
                                         <input type="hidden" name="status" value="declined">
                                         <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Decline</button>
                                     </form>
