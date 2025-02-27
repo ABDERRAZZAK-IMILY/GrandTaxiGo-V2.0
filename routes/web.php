@@ -43,7 +43,9 @@ Route::post('/trajet' , [ReservationController::class , 'store'])->name('reserva
 
 Route::post('/accept', [ReservationController::class, 'acceptReservation'])->name('accept');
 
-Route::post('/reservation' , [ReservationController::class , 'rejectResevation'])->name('reservation.reject');
+Route::post('/reject' , [ReservationController::class , 'rejectReservation'])->name('reject');
+
+
 
 
 

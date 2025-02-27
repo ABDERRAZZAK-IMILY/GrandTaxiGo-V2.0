@@ -100,21 +100,30 @@ class ReservationController extends Controller
              return redirect()->back()->with('error', 'Reservation not found');
          }
      }
-     
-     
-
-
-     public function cancelReservation($id)
+     public function rejectReservation(Request $request)
      {
-         $reservation = Reservation::findOrFail($id);
-         
-         if (Carbon::now()->diffInHours($reservation->departure_time) < 1) {
-             return back()->with('error', 'you cansled book after 1 hours');
+         $validated = $request->validate([
+             'reservation_id' => 'required|integer',
+         ]);
+     
+         $reservation = Reservation::find($validated['reservation_id']);
+     
+         if (!$reservation) {
+             return back()->with('error', 'Reservation not found.');
          }
-         
-         $reservation->save(['status' => 'rejected']);
-         
-         return back()->with('success', 'canled secuuse');
+     
+         if ($reservation->status === "cancelled") {
+             return back()->with('error', 'This reservation has already been rejected.');
+         }
+     
+         if (Carbon::now()->diffInHours($reservation->departure_time) < 1) {
+             return back()->with('error', "You can't cancel a booking less than 1 hour before departure.");
+         }
+     
+         $reservation->status = "cancelled";
+         $reservation->save();
+     
+         return back()->with('success', 'Reservation successfully canceled.');
      }
     /**
      * Remove the specified resource from storage.
