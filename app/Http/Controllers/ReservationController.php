@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+
+
 use Illuminate\Http\Request;
 
 use App\Models\Reservation;
@@ -92,7 +95,6 @@ class ReservationController extends Controller
          if ($reservation) {
              $reservation->status = "accepted";
              $reservation->save();
-     
              return redirect()->back()->with('success', 'Reservation accepted successfully');
          } else {
              return redirect()->back()->with('error', 'Reservation not found');
@@ -102,6 +104,18 @@ class ReservationController extends Controller
      
 
 
+     public function cancelReservation($id)
+     {
+         $reservation = Reservation::findOrFail($id);
+         
+         if (Carbon::now()->diffInHours($reservation->departure_time) < 1) {
+             return back()->with('error', 'you cansled book after 1 hours');
+         }
+         
+         $reservation->save(['status' => 'rejected']);
+         
+         return back()->with('success', 'canled secuuse');
+     }
     /**
      * Remove the specified resource from storage.
      */

@@ -19,9 +19,13 @@
             <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
                     <div class="flex justify-between items-center mb-4">
                         <span class="text-sm text-gray-500" name="trip_id">Trajet #{{ $trip->id }}</span>
-                        <span class="px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800" name="seats_available">
-                            {{ $trip->seats_available }} disponibles
-                        </span>
+                     
+
+                                      <span class="px-3 py-1 rounded-full text-sm {{ $trip->seats_available > 0 ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800' }}" name="seats_available">
+                                        {{ $trip->seats_available }} {{ $trip->seats_available > 0 ? 'disponibles' : 'indisponibles' }}
+                                 </span>
+
+
                     </div>
                     <div class="space-y-3">
                         <div class="flex items-center">

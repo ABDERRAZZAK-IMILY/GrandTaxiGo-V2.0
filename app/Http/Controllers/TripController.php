@@ -7,6 +7,8 @@ use App\Models\Trip;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
+use App\Models\User;
+
 
 class TripController extends Controller
 {
@@ -104,6 +106,18 @@ public function updateAvailability(Request $request)
 
     return response()->json(['success' => true, 'status' => $user->is_available]);
 
+}
+
+
+public function search(Request $request)
+{
+    $drivers = User::where('role', 'driver')
+        ->whereHas('trips', function($query) use ($request) {
+            $query->where('departur_location', 'LIKE', "%{$request->location}%")
+                  ->where('status', 'pending');
+        })->get();
+
+    return view('search', compact('drivers'));
 }
 
 }

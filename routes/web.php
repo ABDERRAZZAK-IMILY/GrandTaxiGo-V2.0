@@ -3,8 +3,6 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TripController;
-use App\Models\Reservation;
-use App\Models\Trip;
 
 use App\Http\Controllers\ReservationController;
 
@@ -33,14 +31,29 @@ Route::post('/lop', [TripController::class, 'store'])->name('trip.store')->middl
 
 Route::post('/trip/update-availability', [TripController::class, 'updateAvailability'])->name('trip.updateAvailability');
 
-Route::get('/trip/histrory' , [TripController::class , 'showHistoryTrip']);
+Route::get('/trip/history', [TripController::class, 'showHistoryTrip'])
+    ->middleware('role:driver');
+
 
 Route::get('/trip/driverProfile/{id}', [TripController::class, 'showDriverProfile'])->name('trip.driverProfile');
 
 Route::get(('trajet') , [ReservationController::class, 'index'])->name('reservation.index');
 
-Route::post('/reservation' , [ReservationController::class , 'store'])->name('reservation.store');
+Route::post('/trajet' , [ReservationController::class , 'store'])->name('reservation.store');
 
-Route::patch('/trip/history', [ReservationController::class, 'acceptReservation'])->name('accept');
+Route::post('/trip/history', [ReservationController::class, 'acceptReservation'])->name('accept');
 
 Route::post('/reservation' , [ReservationController::class , 'rejectResevation'])->name('reservation.reject');
+
+
+
+
+use Carbon\Carbon;
+
+Route::get('/test' , function() {
+
+    $current = Carbon::now();
+
+    echo $current;
+
+});

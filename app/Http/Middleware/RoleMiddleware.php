@@ -11,15 +11,18 @@ class RoleMiddleware
 {
     /**
      * Handle an incoming request.
-     * @param  string  $role 
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @param  string  $role
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function handle(Request $request, Closure $next ,$role): Response
+    public function handle(Request $request, Closure $next, $role): Response
     {
-        if (Auth::user()->role !== $role) {
-            return redirect('/home')->with('error', 'you dont have access to this page');
+        if (!Auth::check() || Auth::user()->role !== $role) {
+           
+            redirect('login');
         }
+
         return $next($request);
-        
     }
 }
