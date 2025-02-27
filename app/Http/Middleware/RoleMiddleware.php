@@ -20,7 +20,7 @@ class RoleMiddleware
     {
         if (!Auth::check() || Auth::user()->role !== $role) {
            
-            redirect('login');
+           return redirect('/login');
         }
 
         return $next($request);

@@ -1,6 +1,14 @@
 
 <script src="https://cdn.tailwindcss.com"></script>
 <x-app-layout>
+
+@if(session('success'))
+    <p class="text-green-500">{{ session('success') }}</p>
+    @else 
+    <p class="text-red-500">{{ session('error') }}</p>
+
+@endif
+
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
             {{ __('Réservations') }}
@@ -21,12 +29,15 @@
                         <span class="text-sm text-gray-500" name="trip_id">Trajet #{{ $trip->id }}</span>
                      
 
-                                      <span class="px-3 py-1 rounded-full text-sm {{ $trip->seats_available > 0 ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800' }}" name="seats_available">
-                                        {{ $trip->seats_available }} {{ $trip->seats_available > 0 ? 'disponibles' : 'indisponibles' }}
-                                 </span>
+                                  
 
-
-                    </div>
+                                 @if ( $trip->available_seats > 0 )
+                                 <span class="px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800" name="seats_available">disponibles</span>
+                                 @else 
+                                 <span class="px-3 py-1 rounded-full text-sm bg-red-100 text-red-800" name="seats_available">indisponibles</span>
+                          
+                               @endif
+                            </div>
                     <div class="space-y-3">
                         <div class="flex items-center">
                             <svg class="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -52,7 +63,6 @@
                     <div class="flex items-center">
                     <svg  class="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 18v3h3v-3h10v3h3v-6H4zm15-8h3v3h-3zM2 10h3v3H2zm15 3H7V5c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v8z"/></svg>
                     <span  name="available_seats"  class="text-gray-700">{{ $trip->available_seats}}</span>
-  
                 </div>
                     <div class="mt-4">
                     <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600  font-semibold py-2 px-4 rounded-lg transition duration-300">
@@ -61,8 +71,7 @@
                     </div>
                 </div>
             </form>
-               
-            @endforeach
+        @endforeach
         </div>
     </div>
 </x-app-layout>
