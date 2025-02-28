@@ -129,6 +129,43 @@ class ReservationController extends Controller
      }
 
 
+     public function cancel(Request $request)
+     {
+
+
+         $validated = $request->validate([
+             'reservation_id' => 'required|integer',
+         ]);
+     
+         $reservation = Reservation::find($validated['reservation_id']);
+     
+         $trip = Trip::find($reservation->trip_id);
+
+         if (!$reservation) {
+             return back()->with('error', 'Reservation not found.');
+         }
+     
+         if ($reservation->status === "cancelled") {
+             return back()->with('error', 'This reservation has already been cancelled.');
+         }
+     
+         if ($trip->departure_time) {
+             $departure_time = Carbon::createFromTimestamp($trip->departure_time);
+     
+             if (Carbon::now()->diffInHours($departure_time) < 1) {
+                 return back()->with('error', "You can't cancel a booking less than 1 hour before departure.");
+             }
+         } else {
+             return back()->with('error', 'Invalid departure time.');
+         }
+     
+         $reservation->status = "cancelled";
+         $reservation->save();
+     
+         return back()->with('success', 'Reservation successfully cancelled.');
+     }
+
+     
   public function search($id){
 
     $reservation = Reservation::find($id);

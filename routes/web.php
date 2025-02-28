@@ -50,6 +50,7 @@ Route::post('/reject' , [ReservationController::class , 'rejectReservation'])->n
 Route::get('/trajet/show/{id}' , [ReservationController::class , 'show'])->name('show');
 
 
+Route::post('/cancel' , [ReservationController::class , 'cancel'])->name('cancel');
 
 Route::post('/search' , [TripController::class , 'search'])->name('search');
 
