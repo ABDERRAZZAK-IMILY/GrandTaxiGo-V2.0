@@ -9,6 +9,9 @@
             </div>
             <!-- Add Trip Form -->
        <div class="mb-6">
+        <form action="{{route('history')}}">
+            <button type="submit" class=" bg-indigo-600 px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">HISTORY</button>
+        </form>
     <h2 class="text-lg font-semibold mb-3">Add New Trip</h2>
     <div class="bg-white shadow rounded-lg p-6">
         <form action="{{route('trip.store')}}" method="POST">

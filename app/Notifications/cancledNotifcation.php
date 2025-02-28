@@ -10,25 +10,26 @@ use Illuminate\Notifications\Notification;
 class cancledNotifcation extends Notification
 {
     use Queueable;
-
+  
+    private $messages;
+  
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($messages)
     {
-        //
+        $this->messages = $messages;
     }
-
+  
     /**
      * Get the notification's delivery channels.
      *
-     * @return array<int, string>
+     * @return array
      */
     public function via(object $notifiable): array
     {
         return ['mail'];
     }
-
     /**
      * Get the mail representation of the notification.
      */
@@ -48,7 +49,7 @@ class cancledNotifcation extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            
         ];
     }
 }

@@ -114,7 +114,7 @@ public function search(Request $request)
     $drivers = User::where('role', 'driver')
         ->whereHas('trips', function($query) use ($request) {
             $query->where('departur_location', 'LIKE', "%{$request->location}%")
-                  ->where('status', 'pending');
+                  ->where('destination', 'LIKE' , "%{$request->destination}%");
         })->get();
 
     return view('search', compact('drivers'));

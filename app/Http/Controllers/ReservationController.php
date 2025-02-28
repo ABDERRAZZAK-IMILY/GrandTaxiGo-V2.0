@@ -175,6 +175,8 @@ class ReservationController extends Controller
     return view("reservation.show" , compact('reservation' , 'trip'));
   }
 
+  
+
     /**
      * Remove the specified resource from storage.
      */

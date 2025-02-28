@@ -134,12 +134,8 @@
                         <div class="h-4 w-4 bg-green-400 rounded-full mr-2 pulse-animation"></div>
                         <h3 class="text-lg font-medium">Driver Availability Status</h3>
                     </div>
-                    <button class="bg-primary-500 hover:bg-primary-600 text-white px-5 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105">
-                        Toggle Availability
-                    </button>
                 </div>
             </div>
-
             <!-- Pending Reservations -->
             <div class="mb-8">
                 <div class="flex justify-between items-center mb-4">
