@@ -66,7 +66,9 @@ class ReservationController extends Controller
      */
     public function show(string $id)
     {
-        Reservation::find($id);
+        $reservation = Reservation::find($id);
+
+        return view('reservation.index' , compact('reservation'));
 
     }
 
@@ -125,6 +127,17 @@ class ReservationController extends Controller
      
          return back()->with('success', 'Reservation successfully canceled.');
      }
+
+
+  public function search($id){
+
+    $reservation = Reservation::find($id);
+
+    $trip = Trip::find($reservation->trip_id);
+
+    return view("reservation.show" , compact('reservation' , 'trip'));
+  }
+
     /**
      * Remove the specified resource from storage.
      */

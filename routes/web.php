@@ -7,14 +7,15 @@ use App\Http\Controllers\TripController;
 use App\Http\Controllers\ReservationController;
 use App\Models\Trip;
 use App\Models\User;
+use PHPUnit\Framework\Attributes\Group;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [TripController::class, 'index'])->middleware(['auth', 'verified'])->middleware('role:driver')->name('dashboard');
+Route::get('/dashboarddriver', [TripController::class, 'index'])->middleware(['auth', 'verified'])->middleware('role:driver')->name('dashboard');
 
-Route::get(('/dashboardpassenger') , [ReservationController::class, 'index'])->middleware(['auth', 'verified'])->middleware('role:passenger')->name('dashboard');
+Route::get(('/dashboardpassenger') , [ReservationController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {
@@ -46,10 +47,13 @@ Route::post('/accept', [ReservationController::class, 'acceptReservation'])->nam
 
 Route::post('/reject' , [ReservationController::class , 'rejectReservation'])->name('reject');
 
+Route::get('/trajet/show/{id}' , [ReservationController::class , 'show'])->name('show');
 
 
 
+Route::post('/search' , [TripController::class , 'search'])->name('search');
 
+Route::get('/searchpage/{id}' , [ReservationController::class , 'search'])->name('recheche');
 
 use Carbon\Carbon;
 
