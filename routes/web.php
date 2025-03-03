@@ -86,7 +86,11 @@ Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback']
 
 
 
+Route::get('/admin' , function(){
 
+
+    return view('admin.dashboard');
+});
 
 
 
