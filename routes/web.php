@@ -56,6 +56,35 @@ Route::post('/search' , [TripController::class , 'search'])->name('search');
 
 Route::get('/searchpage/{id}' , [ReservationController::class , 'search'])->name('recheche');
 
+
+
+
+
+
+Route::get('/checkout', 'App\Http\Controllers\StripeController@checkout')->name('checkout');
+Route::post('/session', 'App\Http\Controllers\StripeController@session')->name('session');
+Route::get('/success', 'App\Http\Controllers\StripeController@success')->name('success');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 use Carbon\Carbon;
 
 Route::get('/test' , function() {
