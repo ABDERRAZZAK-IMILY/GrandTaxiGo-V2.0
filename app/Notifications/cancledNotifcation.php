@@ -13,43 +13,31 @@ class cancledNotifcation extends Notification
   
     private $messages;
   
-    /**
-     * Create a new notification instance.
-     */
     public function __construct($messages)
     {
         $this->messages = $messages;
     }
   
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @return array
-     */
     public function via(object $notifiable): array
     {
         return ['mail'];
     }
-    /**
-     * Get the mail representation of the notification.
-     */
+
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->subject('Annulation automatique de réservation')
+                    ->greeting('Bonjour,')
+                    ->line('Votre réservation a été automatiquement annulée.')
+                    ->line($this->messages)
+                    ->line('Si vous avez des questions, n\'hésitez pas à nous contacter.')
+                    ->salutation('Cordialement,');
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(object $notifiable): array
     {
         return [
-            
+            'message' => $this->messages
         ];
     }
 }
