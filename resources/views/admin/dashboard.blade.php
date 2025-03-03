@@ -16,7 +16,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <div class="text-xs font-bold text-blue-500 uppercase mb-1">Utilisateurs Total</div>
-                        <div class="text-xl font-bold text-gray-800">مجموع المستخمين</div>
+                        <div class="text-xl font-bold text-gray-800">7</div>
                     </div>
                     <div>
                         <i class="fas fa-users text-2xl text-gray-300"></i>
@@ -31,7 +31,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <div class="text-xs font-bold text-green-500 uppercase mb-1">Trajets Complétés</div>
-                        <div class="text-xl font-bold text-gray-800">مجموع الرحلات</div>
+                        <div class="text-xl font-bold text-gray-800">3</div>
                     </div>
                     <div>
                         <i class="fas fa-check-circle text-2xl text-gray-300"></i>
@@ -61,7 +61,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <div class="text-xs font-bold text-yellow-500 uppercase mb-1">Chauffeurs Actifs</div>
-                        <div class="text-xl font-bold text-gray-800">younes</div>
+                        <div class="text-xl font-bold text-gray-800">12</div>
                     </div>
                     <div>
                         <i class="fas fa-taxi text-2xl text-gray-300"></i>

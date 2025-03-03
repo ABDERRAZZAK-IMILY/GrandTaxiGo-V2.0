@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TripController;
@@ -86,11 +87,7 @@ Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback']
 
 
 
-Route::get('/admin' , function(){
-
-
-    return view('admin.dashboard');
-});
+Route::get('/admin' , [AdminController::class , 'index'])->name("admin.dashboard");
 
 
 
