@@ -9,6 +9,8 @@ use App\Models\Trip;
 use App\Models\User;
 use PHPUnit\Framework\Attributes\Group;
 
+use App\Http\Controllers\SocialiteController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -72,6 +74,10 @@ Route::get('/success', 'App\Http\Controllers\StripeController@success')->name('s
 
 
 
+Route::get('/auth/{provider}/redirect', [SocialiteController::class, 'redirect'])
+    ->name('socialite.redirect');
+Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback'])
+    ->name('socialite.callback');
 
 
 
