@@ -89,7 +89,11 @@ Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback']
 
 Route::get('/admin' , [AdminController::class , 'index'])->name("admin.dashboard");
 
+Route::get('/admin/users' , [AdminController::class , 'users'])->name("admin.users");
 
+Route::get('/admin/user/{id}' , [AdminController::class , 'user'])->name("admin.user");
+
+Route::delete('/admin/user/{id}' , [AdminController::class , 'deleteUser'])->name("admin.deleteUser");
 
 
 use Carbon\Carbon;

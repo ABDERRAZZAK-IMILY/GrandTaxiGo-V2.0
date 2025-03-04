@@ -54,11 +54,10 @@
                         <tr>
                             <td colspan="5" style="text-align:right;">
                                 <form action="/session" method="POST">
-                                <a href="{{ url('/') }}" class="btn btn-danger"> <i class="fa fa-arrow-left"></i> GET THE TRIP</a>
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                                 <input type='hidden' name="total" value="6">
                                 <input type='hidden' name="productname" value="DRIVER SERVERCE">
-                                <button class="btn btn-success" type="submit" id="checkout-live-button"><i class="fa fa-money"></i> Checkout</button>
+                                <button class="btn btn-success" type="submit" id="checkout-live-button"><i class="fa fa-money"></i> Resevere</button>
                                 </form>
                             </td>
                         </tr>
@@ -71,3 +70,4 @@
     </div>
 </body>
 </html>
+

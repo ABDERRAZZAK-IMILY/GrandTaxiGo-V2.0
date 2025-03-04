@@ -19,9 +19,6 @@
             @foreach($trips as $trip)
             <form action="{{route('reservation.store')}}" method="POST">
                 @csrf
-
-
-
                 <input type="hidden" name="trip_id" value="{{ $trip->id }}">
                 <input type="hidden" name="available_seats" value="{{ $trip->available_seats }}">
         

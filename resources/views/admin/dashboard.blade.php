@@ -1,3 +1,8 @@
+
+@extends('layouts.admin')
+
+@section('content')
+
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -147,7 +152,6 @@
         
         // Check if template variables are passed
         try {
-            // This is commented out to avoid errors, but would be used in a real environment
             // availableDrivers = {{ $availableDrivers ?? 0 }};
             // busyDrivers = {{ $busyDrivers ?? 0 }};
             // unavailableDrivers = {{ $unavailableDrivers ?? 0 }};
@@ -186,3 +190,5 @@
         });
     });
 </script>
+
+@endsection

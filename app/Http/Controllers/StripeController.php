@@ -8,7 +8,7 @@ class StripeController extends Controller
 {
     public function checkout()
     {
-        return view('checkout');
+        return view('reservation.checkout');
     }
  
     public function session(Request $request)
@@ -24,7 +24,7 @@ class StripeController extends Controller
             'line_items'  => [
                 [
                     'price_data' => [
-                        'currency'     => 'USD',
+                        'currency'     => 'MAD',
                         'product_data' => [
                             "name" => $productname,
                         ],
