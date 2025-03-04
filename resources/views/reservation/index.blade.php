@@ -1,4 +1,3 @@
-
 <script src="https://cdn.tailwindcss.com"></script>
 <x-app-layout>
 
@@ -20,12 +19,32 @@
             @foreach($trips as $trip)
             <form action="{{route('reservation.store')}}" method="POST">
                 @csrf
+
+
+
                 <input type="hidden" name="trip_id" value="{{ $trip->id }}">
                 <input type="hidden" name="available_seats" value="{{ $trip->available_seats }}">
-
-
+        
             <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
-                    <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center mb-4">
+            @if($trip->driver->profile_picture)
+                <img src="{{ Storage::url($trip->driver->profile_picture) }}" class="w-10 h-10 rounded-full mr-2">
+            @else
+                <div class="w-10 h-10 rounded-full bg-gray-200 mr-2"></div>
+            @endif
+            <div>
+                <span class="block font-semibold">{{ $trip->driver->name }}</span>
+                <span class="text-sm text-gray-500">
+                    @if($trip->driver->is_available)
+                        <span class="text-green-500">Available</span>
+                    @else
+                        <span class="text-red-500">Unavailable</span>
+                    @endif
+                </span>
+            </div>
+        </div>      
+            <div class="flex justify-between items-center mb-4">
+                        
                         <span class="text-sm text-gray-500" name="trip_id">Trajet #{{ $trip->id }}</span>
 
                                  @if ( $trip->available_seats > 0 )

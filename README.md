@@ -4,6 +4,35 @@
 <a href="https://github.com/ABDERRAZZAK-IMILY/GrandTaxiGo"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
 </p>
 
-## About GRAND TAXI GO
 
-GRANDTAXIGO
+# GrandTaxiGo - Plateforme de réservation de taxis
+
+## À propos du projet
+Description brève du projet et de ses fonctionnalités principales.
+
+## Technologies utilisées
+- Laravel 10.x
+- PostgreSQL
+- Stripe
+- Laravel Socialite
+- Leaflet.js
+- Laravel WebSockets/Pusher
+- etc.
+
+## Installation
+Instructions détaillées pour l'installation locale du projet.
+
+## Structure de la base de données
+Description des tables principales et leurs relations.
+
+## Fonctionnalités
+Liste détaillée des fonctionnalités implémentées.
+
+## API Routes
+Documentation des routes API disponibles.
+
+## Tests
+Instructions pour exécuter les tests.
+
+## Contributeurs
+Liste des membres de l'équipe.

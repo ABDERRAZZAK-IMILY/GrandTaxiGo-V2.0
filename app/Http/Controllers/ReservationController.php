@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Reservation;
 use App\Models\Trip;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 class ReservationController extends Controller
 {
@@ -18,6 +19,9 @@ class ReservationController extends Controller
     public function index()
     {
         $trips =   Trip::all();
+
+        // $driver = User::where('role', 'driver')->get();
+
         return view('reservation.index' , compact('trips'));
     }
 
