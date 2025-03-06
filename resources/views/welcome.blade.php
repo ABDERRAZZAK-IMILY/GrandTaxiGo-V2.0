@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GRANGTAXIGO - Book Your Taxi</title>
+  <title>GrandTaxiGo - احجز سيارة أجرة بسهولة</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/all.min.js"></script>
@@ -23,7 +23,7 @@
     }
     
     .taxi-drive:hover {
-      transform: translateX(20px);
+      transform: translateX(-20px);
     }
     
     .city-bg {
@@ -38,244 +38,258 @@
   <!-- Navbar -->
   <nav class="bg-yellow-500 text-white shadow-lg">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-      <div class="flex items-center space-x-2">
+      <div class="flex items-center space-x-2 rtl:space-x-reverse">
         <div class="taxi-drive text-3xl font-bold">
-          <i class="fas fa-taxi mr-2"></i>GRANGTAXIGO
+          <i class="fas fa-taxi ml-2"></i>GrandTaxiGo
         </div>
       </div>
-      <div class="hidden md:flex space-x-8 text-lg">
-        <a href="#" class="hover:text-yellow-200 transition-colors duration-300">Home</a>
-        <a href="#" class="hover:text-yellow-200 transition-colors duration-300">Services</a>
-        <a href="#" class="hover:text-yellow-200 transition-colors duration-300">About</a>
-        <a href="#" class="hover:text-yellow-200 transition-colors duration-300">Contact</a>
+      <div class="hidden md:flex space-x-8 rtl:space-x-reverse text-lg">
+        <a href="#" class="hover:text-yellow-200 transition-colors duration-300">الرئيسية</a>
+        <a href="#services" class="hover:text-yellow-200 transition-colors duration-300">خدماتنا</a>
+        <a href="#about" class="hover:text-yellow-200 transition-colors duration-300">من نحن</a>
+        <a href="#contact" class="hover:text-yellow-200 transition-colors duration-300">اتصل بنا</a>
+        @auth
+          @if(Auth::user()->role === 'admin')
+            <a href="{{ route('admin.dashboard') }}" class="bg-white text-yellow-500 px-4 py-1 rounded-full hover:bg-yellow-100 transition-colors duration-300">لوحة التحكم</a>
+          @elseif(Auth::user()->role === 'driver')
+            <a href="{{ route('dashboard') }}" class="bg-white text-yellow-500 px-4 py-1 rounded-full hover:bg-yellow-100 transition-colors duration-300">لوحة السائق</a>
+          @else
+            <a href="{{ route('dashboard') }}" class="bg-white text-yellow-500 px-4 py-1 rounded-full hover:bg-yellow-100 transition-colors duration-300">حجوزاتي</a>
+          @endif
+        @else
+          <a href="{{ route('login') }}" class="bg-white text-yellow-500 px-4 py-1 rounded-full hover:bg-yellow-100 transition-colors duration-300">تسجيل الدخول</a>
+          <a href="{{ route('register') }}" class="bg-yellow-600 text-white px-4 py-1 rounded-full hover:bg-yellow-700 transition-colors duration-300">التسجيل</a>
+        @endauth
       </div>
-      <div>
-        <!-- Enhanced Auth Buttons -->
-        <div class="flex items-center space-x-4">
-                            @if (Route::has('login'))
-                                @auth
-                                    <a href="{{ url('/dashboard') }}" class="btn-primary">
-                                        Dashboard
-                                    </a>
-                                @else
-                                    <a href="{{ route('login') }}" class="btn-secondary">
-                                        Connexion
-                                    </a>
-                                    @if (Route::has('register'))
-                                        <a href="{{ route('register') }}" class="btn-primary">
-                                            Inscription
-                                        </a>
-                                    @endif
-                                @endauth
-                            @endif
-                        </div>
+      <div class="md:hidden">
+        <button id="mobile-menu-button" class="text-white focus:outline-none">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-yellow-600 pb-4">
+      <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+        <a href="#" class="text-white hover:text-yellow-200 transition-colors duration-300">الرئيسية</a>
+        <a href="#services" class="text-white hover:text-yellow-200 transition-colors duration-300">خدماتنا</a>
+        <a href="#about" class="text-white hover:text-yellow-200 transition-colors duration-300">من نحن</a>
+        <a href="#contact" class="text-white hover:text-yellow-200 transition-colors duration-300">اتصل بنا</a>
+        @auth
+          @if(Auth::user()->role === 'admin')
+            <a href="{{ route('admin.dashboard') }}" class="bg-white text-yellow-500 px-4 py-1 rounded-full hover:bg-yellow-100 transition-colors duration-300 text-center">لوحة التحكم</a>
+          @elseif(Auth::user()->role === 'driver')
+            <a href="{{ route('dashboard') }}" class="bg-white text-yellow-500 px-4 py-1 rounded-full hover:bg-yellow-100 transition-colors duration-300 text-center">لوحة السائق</a>
+          @else
+            <a href="{{ route('dashboard') }}" class="bg-white text-yellow-500 px-4 py-1 rounded-full hover:bg-yellow-100 transition-colors duration-300 text-center">حجوزاتي</a>
+          @endif
+        @else
+          <a href="{{ route('login') }}" class="bg-white text-yellow-500 px-4 py-1 rounded-full hover:bg-yellow-100 transition-colors duration-300 text-center">تسجيل الدخول</a>
+          <a href="{{ route('register') }}" class="bg-yellow-700 text-white px-4 py-1 rounded-full hover:bg-yellow-800 transition-colors duration-300 text-center">التسجيل</a>
+        @endauth
       </div>
     </div>
   </nav>
 
   <!-- Hero Section -->
-  <div class="relative overflow-hidden bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 text-white">
+  <section class="relative overflow-hidden bg-gradient-to-b from-yellow-400 to-yellow-500 text-white">
     <div class="container mx-auto px-4 py-16 md:py-24">
-      <div class="grid md:grid-cols-2 gap-8 items-center">
-        <div class="space-y-6 z-10">
-          <h1 class="text-4xl md:text-6xl font-extrabold leading-tight" id="hero-text">
-            Your Ride, <br>
-            <span class="text-black">Just a Tap Away</span>
-          </h1>
-          <p class="text-lg md:text-xl opacity-90">
-            Fast, reliable, and comfortable taxi service available 24/7. Book your ride now and enjoy the journey!
-          </p>
-          <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-            <button class="bg-black hover:bg-gray-800 text-white px-8 py-3 rounded-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg">
-              Book Now
-            </button>
-            <button class="bg-white hover:bg-gray-100 text-yellow-500 px-8 py-3 rounded-lg font-bold transition-all duration-300 transform hover:scale-105 shadow-lg">
-              Learn More
-            </button>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div class="text-center md:text-right">
+          <h1 class="text-4xl md:text-5xl font-bold mb-4">احجز سيارة أجرة بسهولة وأمان</h1>
+          <p class="text-xl mb-8">منصة GrandTaxiGo توفر لك خدمة حجز سيارات الأجرة بطريقة سهلة وآمنة وبأسعار مناسبة.</p>
+          <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 rtl:space-x-reverse justify-center md:justify-start">
+            @auth
+              <a href="{{ route('dashboard') }}" class="bg-white text-yellow-500 hover:bg-yellow-100 px-8 py-3 rounded-full text-lg font-bold transition-colors duration-300">ابدأ الآن</a>
+            @else
+              <a href="{{ route('register') }}" class="bg-white text-yellow-500 hover:bg-yellow-100 px-8 py-3 rounded-full text-lg font-bold transition-colors duration-300">سجل الآن</a>
+              <a href="{{ route('login') }}" class="bg-yellow-600 hover:bg-yellow-700 text-white px-8 py-3 rounded-full text-lg font-bold transition-colors duration-300">تسجيل الدخول</a>
+            @endauth
           </div>
         </div>
-        <div class="relative">
-          <div class="float">
-            <img src="https://purepng.com/public/uploads/large/purepng.com-ford-mustang-red-carcarvehicletransportford-961524641401fbblv.png" alt="Taxi illustration" class="rounded-lg shadow-2xl mx-auto max-w-full h-auto">
-          </div>
+        <div class="float">
+          <img src="https://cdn-icons-png.flaticon.com/512/2554/2554936.png" alt="Taxi Illustration" class="w-full max-w-md mx-auto">
         </div>
       </div>
     </div>
-    
-    <!-- Animated shapes -->
-    <div class="absolute top-20 right-20 w-20 h-20 bg-white opacity-10 rounded-full float" style="animation-delay: 0.5s;"></div>
-    <div class="absolute bottom-10 left-10 w-32 h-32 bg-white opacity-10 rounded-full float" style="animation-delay: 1s;"></div>
-    <div class="absolute top-40 left-40 w-16 h-16 bg-white opacity-10 rounded-full float" style="animation-delay: 1.5s;"></div>
-  </div>
-  <!-- Features Section -->
-  <div class="container mx-auto px-4 py-16">
-    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Why Choose GRANGTAXIGO?</h2>
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="bg-white p-6 rounded-xl shadow-lg transition-transform duration-300 hover:transform hover:scale-105">
-        <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4 mx-auto">
-          <i class="fas fa-bolt text-yellow-500 text-2xl"></i>
-        </div>
-        <h3 class="text-xl font-bold text-center mb-2">Fast Pickup</h3>
-        <p class="text-gray-600 text-center">Our drivers will reach you within minutes of booking your ride.</p>
-      </div>
-      
-      <div class="bg-white p-6 rounded-xl shadow-lg transition-transform duration-300 hover:transform hover:scale-105">
-        <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4 mx-auto">
-          <i class="fas fa-shield-alt text-yellow-500 text-2xl"></i>
-        </div>
-        <h3 class="text-xl font-bold text-center mb-2">Safe Journey</h3>
-        <p class="text-gray-600 text-center">All our drivers are verified and trained for your safety.</p>
-      </div>
-      
-      <div class="bg-white p-6 rounded-xl shadow-lg transition-transform duration-300 hover:transform hover:scale-105">
-        <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4 mx-auto">
-          <i class="fas fa-tag text-yellow-500 text-2xl"></i>
-        </div>
-        <h3 class="text-xl font-bold text-center mb-2">Affordable Rates</h3>
-        <p class="text-gray-600 text-center">Enjoy competitive pricing with no hidden charges.</p>
-      </div>
+    <div class="absolute bottom-0 left-0 right-0">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#f9fafb" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,149.3C960,160,1056,160,1152,138.7C1248,117,1344,75,1392,53.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+      </svg>
     </div>
-  </div>
-  
-  <!-- Testimonials -->
-  <div class="container mx-auto px-4 py-16">
-    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">What Our Customers Say</h2>
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="bg-white p-6 rounded-xl shadow-lg">
-        <div class="flex justify-center mb-4">
-          <div class="text-yellow-500">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-          </div>
-        </div>
-        <p class="text-gray-600 text-center mb-4">"GRANGTAXIGO never disappoints! My driver arrived within 3 minutes and got me to my destination safely and on time."</p>
-        <div class="flex items-center justify-center">
-          <div class="w-10 h-10 bg-gray-200 rounded-full mr-3"></div>
-          <div>
-            <h4 class="font-bold">Sarah Johnson</h4>
-            <p class="text-sm text-gray-500">Regular Customer</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="bg-white p-6 rounded-xl shadow-lg">
-        <div class="flex justify-center mb-4">
-          <div class="text-yellow-500">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-          </div>
-        </div>
-        <p class="text-gray-600 text-center mb-4">"The app is so easy to use, and the drivers are always professional. Best taxi service in the city!"</p>
-        <div class="flex items-center justify-center">
-          <div class="w-10 h-10 bg-gray-200 rounded-full mr-3"></div>
-          <div>
-            <h4 class="font-bold">Michael Brown</h4>
-            <p class="text-sm text-gray-500">Business Traveler</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="bg-white p-6 rounded-xl shadow-lg">
-        <div class="flex justify-center mb-4">
-          <div class="text-yellow-500">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-          </div>
-        </div>
-        <p class="text-gray-600 text-center mb-4">"I love the fare estimator feature. No surprises, and the prices are always reasonable. Highly recommend!"</p>
-        <div class="flex items-center justify-center">
-          <div class="w-10 h-10 bg-gray-200 rounded-full mr-3"></div>
-          <div>
-            <h4 class="font-bold">Emily Chen</h4>
-            <p class="text-sm text-gray-500">Student</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Footer -->
-  <footer class="bg-gray-800 text-white py-12">
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="py-16 bg-gray-100">
     <div class="container mx-auto px-4">
-      <div class="grid md:grid-cols-4 gap-8">
-        <div>
-          <h3 class="text-xl font-bold mb-4">GRANGTAXIGO</h3>
-          <p class="text-gray-400">Your trusted partner for safe and reliable taxi services. Available 24/7 for all your transportation needs.</p>
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">خدماتنا</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">نقدم مجموعة متنوعة من الخدمات لتلبية احتياجاتك في التنقل بكل راحة وأمان.</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:transform hover:scale-105">
+          <div class="p-6">
+            <div class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i class="fas fa-map-marker-alt text-white text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-center mb-2">حجز سهل وسريع</h3>
+            <p class="text-gray-600 text-center">احجز سيارة أجرة بضغطة زر واحدة، بدون انتظار أو مكالمات هاتفية.</p>
+          </div>
         </div>
         
-        <div>
-          <h3 class="text-lg font-bold mb-4">Quick Links</h3>
-          <ul class="space-y-2">
-            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Home</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Services</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
-          </ul>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:transform hover:scale-105">
+          <div class="p-6">
+            <div class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i class="fas fa-shield-alt text-white text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-center mb-2">سائقين موثوقين</h3>
+            <p class="text-gray-600 text-center">جميع السائقين لدينا مرخصين ومدربين لضمان رحلة آمنة ومريحة.</p>
+          </div>
         </div>
         
-        <div>
-          <h3 class="text-lg font-bold mb-4">Services</h3>
-          <ul class="space-y-2">
-            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">City Taxi</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Airport Transfer</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Corporate Travel</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Event Transportation</a></li>
-          </ul>
-        </div>
-        
-        <div>
-          <h3 class="text-lg font-bold mb-4">Contact Us</h3>
-          <ul class="space-y-2">
-            <li class="flex items-center"><i class="fas fa-map-marker-alt mr-2"></i> 123 Taxi Street, City</li>
-            <li class="flex items-center"><i class="fas fa-phone mr-2"></i> +1 (555) 123-4567</li>
-            <li class="flex items-center"><i class="fas fa-envelope mr-2"></i> info@quickride.com</li>
-          </ul>
-          <div class="mt-4 flex space-x-4">
-            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300"><i class="fab fa-instagram"></i></a>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:transform hover:scale-105">
+          <div class="p-6">
+            <div class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i class="fas fa-money-bill-wave text-white text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-center mb-2">أسعار شفافة</h3>
+            <p class="text-gray-600 text-center">أسعارنا واضحة وشفافة، بدون رسوم خفية أو زيادات مفاجئة.</p>
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div>
+          <img src="https://cdn-icons-png.flaticon.com/512/4946/4946854.png" alt="About Us" class="w-full max-w-md mx-auto">
+        </div>
+        <div>
+          <h2 class="text-3xl font-bold text-gray-800 mb-4">من نحن</h2>
+          <p class="text-gray-600 mb-4">GrandTaxiGo هي منصة رائدة في مجال حجز سيارات الأجرة عبر الإنترنت، تهدف إلى تسهيل عملية التنقل وتوفير تجربة سفر مريحة وآمنة للجميع.</p>
+          <p class="text-gray-600 mb-4">تأسست الشركة في عام 2023 بهدف تحسين خدمات النقل وتوفير فرص عمل للسائقين، مع التركيز على الجودة والأمان والراحة.</p>
+          <p class="text-gray-600">نحن نسعى جاهدين لتقديم أفضل خدمة ممكنة لعملائنا، ونعمل باستمرار على تطوير منصتنا لتلبية احتياجاتهم المتغيرة.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-16 bg-gray-100">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">اتصل بنا</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">نحن هنا للإجابة على جميع استفساراتك. لا تتردد في التواصل معنا.</p>
+      </div>
       
-      <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-        <p>&copy; 2025 QuickRide. All rights reserved.</p>
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <div class="grid grid-cols-1 md:grid-cols-2">
+            <div class="p-6 bg-yellow-500 text-white">
+              <h3 class="text-xl font-bold mb-4">معلومات الاتصال</h3>
+              <div class="space-y-4">
+                <div class="flex items-start">
+                  <i class="fas fa-map-marker-alt mt-1 ml-3"></i>
+                  <p>123 شارع المدينة، المغرب</p>
+                </div>
+                <div class="flex items-start">
+                  <i class="fas fa-phone mt-1 ml-3"></i>
+                  <p>+212 5XX-XXXXXX</p>
+                </div>
+                <div class="flex items-start">
+                  <i class="fas fa-envelope mt-1 ml-3"></i>
+                  <p>info@grandtaxigo.com</p>
+                </div>
+              </div>
+              <div class="mt-8">
+                <h4 class="font-bold mb-2">تابعنا على</h4>
+                <div class="flex space-x-4 rtl:space-x-reverse">
+                  <a href="#" class="text-white hover:text-yellow-200 transition-colors duration-300">
+                    <i class="fab fa-facebook-f text-xl"></i>
+                  </a>
+                  <a href="#" class="text-white hover:text-yellow-200 transition-colors duration-300">
+                    <i class="fab fa-twitter text-xl"></i>
+                  </a>
+                  <a href="#" class="text-white hover:text-yellow-200 transition-colors duration-300">
+                    <i class="fab fa-instagram text-xl"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="p-6">
+              <form>
+                <div class="mb-4">
+                  <label for="name" class="block text-gray-700 mb-2">الاسم</label>
+                  <input type="text" id="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                </div>
+                <div class="mb-4">
+                  <label for="email" class="block text-gray-700 mb-2">البريد الإلكتروني</label>
+                  <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                </div>
+                <div class="mb-4">
+                  <label for="message" class="block text-gray-700 mb-2">الرسالة</label>
+                  <textarea id="message" rows="4" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"></textarea>
+                </div>
+                <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-lg transition-colors duration-300">إرسال</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-xl font-bold mb-4">GrandTaxiGo</h3>
+          <p class="text-gray-400">منصة حجز سيارات الأجرة الرائدة في المغرب.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold mb-4">روابط سريعة</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">الرئيسية</a></li>
+            <li><a href="#services" class="text-gray-400 hover:text-white transition-colors duration-300">خدماتنا</a></li>
+            <li><a href="#about" class="text-gray-400 hover:text-white transition-colors duration-300">من نحن</a></li>
+            <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors duration-300">اتصل بنا</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold mb-4">الخدمات</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">حجز سيارة أجرة</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">رحلات مشتركة</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">رحلات خاصة</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">خدمات الشركات</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold mb-4">النشرة الإخبارية</h3>
+          <p class="text-gray-400 mb-4">اشترك في نشرتنا الإخبارية للحصول على آخر الأخبار والعروض.</p>
+          <form class="flex">
+            <input type="email" placeholder="بريدك الإلكتروني" class="px-4 py-2 rounded-l-lg focus:outline-none flex-grow">
+            <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-r-lg transition-colors duration-300">اشتراك</button>
+          </form>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+        <p class="text-gray-400">&copy; 2023 GrandTaxiGo. جميع الحقوق محفوظة.</p>
       </div>
     </div>
   </footer>
 
-  <!-- Animation Script -->
   <script>
-    // Animate hero text on load
-    window.addEventListener('DOMContentLoaded', () => {
-      gsap.from("#hero-text", {
-        duration: 1, 
-        y: 50, 
-        opacity: 0, 
-        ease: "power3.out" 
-      });
-      
-      // Animate features on scroll
-      const features = document.querySelectorAll('.grid > div');
-      gsap.from(features, {
-        duration: 0.8,
-        y: 50,
-        opacity: 0,
-        stagger: 0.2,
-        scrollTrigger: {
-          trigger: features[0],
-          start: "top 80%"
-        }
-      });
+    // Mobile Menu Toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
     });
   </script>
 </body>

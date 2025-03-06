@@ -153,12 +153,12 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                         </svg>
                                         <div>
-                                            <p class="font-semibold">Pickup: {{ $reservation->departure_location }}</p>
+                                            <p class="font-semibold">Pickup: {{ $reservation->trip->departure_location }}</p>
                                             <div class="flex items-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                                                 </svg>
-                                                <p class="text-sm text-gray-600 ml-1">Destination: {{ $reservation->destination }}</p>
+                                                <p class="text-sm text-gray-600 ml-1">Destination: {{ $reservation->trip->destination }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -166,7 +166,7 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
-                                        {{ $reservation->departure_time }}
+                                        {{ $reservation->trip->departure_time }}
                                     </div>
                                     <div class="mt-1 flex items-center">
                                         <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
@@ -183,7 +183,7 @@
                                             Accept
                                         </button>
                                     </form>
-                                    <form action="{{ route('reject') }}" method="POST">
+                                    <form action="{{ route('reject')}}" method="POST">
                                         @csrf
                                         <input type="hidden" name="reservation_id" value="{{$reservation->id}}">
                                         <input type="hidden" name="status" value="declined">
@@ -224,7 +224,7 @@
                                         <td class="px-6 py-4 text-sm text-gray-900">{{ $trip->destination }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span class="px-2.5 py-0.5 rounded-full text-xs font-medium {{ $trip->status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
-                                                {{ ucfirst($trip->status) }}
+                                            {{ $trip->status }}
                                             </span>
                                         </td>
                                     </tr>

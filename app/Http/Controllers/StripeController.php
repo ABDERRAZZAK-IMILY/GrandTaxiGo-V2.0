@@ -6,10 +6,7 @@ use Illuminate\Http\Request;
  
 class StripeController extends Controller
 {
-    public function checkout()
-    {
-        return view('reservation.checkout');
-    }
+  
  
     public function session(Request $request)
     {
@@ -36,7 +33,6 @@ class StripeController extends Controller
             ],
             'mode'        => 'payment',
             'success_url' => route('success'),
-            'cancel_url'  => route('checkout'),
         ]);
  
         return redirect()->away($session->url);

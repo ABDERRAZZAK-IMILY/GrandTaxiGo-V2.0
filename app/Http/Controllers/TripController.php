@@ -6,7 +6,7 @@ use App\Models\Reservation;
 use App\Models\Trip;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Cache;
 use App\Models\User;
 
 
@@ -17,8 +17,15 @@ class TripController extends Controller
      */
     public function index()
     {
+        $userId = Auth::id();
+        $trips = Cache::remember('driver_trips_' . $userId, 60 * 5, function () use ($userId) {
+            return Trip::where('driver_id', $userId)
+                ->with(['reservations', 'reservations.user'])
+                ->orderBy('departure_time', 'desc')
+                ->get();
+        });
      
-         return view('trip.index');
+        return view('trip.index', compact('trips'));
     }
 
     /**
@@ -45,6 +52,8 @@ class TripController extends Controller
         $data['driver_id'] = Auth::id();
         Trip::create($data);
 
+        Cache::forget('driver_trips_' . Auth::id());
+
         return redirect()->back()->with('success', 'Trip created successfully');
     }
 
@@ -53,7 +62,11 @@ class TripController extends Controller
      */
     public function show(string $id)
     {
+        $trip = Trip::findOrFail($id);
         
+        $pendingReservations = $trip->reservations()->where('status', 'pending')->get();
+        
+        return view('trip.show', compact('trip', 'pendingReservations'));
     }
 
     /**
@@ -81,43 +94,68 @@ class TripController extends Controller
     }
 
     public function showHistoryTrip(){
-
-         $pendingReservations = Reservation::all();
-         $tripHistory = Trip::all();
-
-        return view('trip.history' , compact('pendingReservations') , compact('tripHistory'));
+        $userId = Auth::id();
+        $tripHistory = Cache::remember('driver_history_' . $userId, 60 * 10, function () use ($userId) {
+            return Trip::where('driver_id', $userId)
+                ->with(['reservations', 'reservations.user'])
+                ->orderBy('departure_time', 'desc')
+                ->get();
+        });
+        
+        $pendingReservations = Reservation::whereHas('trip', function($query) use ($userId) {
+            $query->where('driver_id', $userId);
+        })->where('status', 'pending')
+          ->with(['trip', 'user'])
+          ->orderBy('created_at', 'desc')
+          ->get();
+        
+        return view('trip.history', compact('tripHistory', 'pendingReservations'));
     }
 
     public function showDriverProfile($id)
     {
-         $driver = \App\Models\User::find($id);
-        return view('trip.profile', compact('driver'));
+        $driver = Cache::remember('driver_profile_' . $id, 60 * 30, function () use ($id) {
+            return User::with(['ratings', 'trips'])
+                ->where('id', $id)
+                ->where('role', 'driver')
+                ->firstOrFail();
+        });
+        
+        return view('trip.driver_profile', compact('driver'));
     }
 
+    public function updateAvailability(Request $request)
+    {
+        $trip = Trip::findOrFail($request->trip_id);
+        $trip->available_seats = $request->available_seats;
+        $trip->save();
+        
+        Cache::forget('driver_trips_' . $trip->driver_id);
+        
+        return redirect()->back()->with('success', 'Availability updated successfully');
+    }
 
+    public function search(Request $request)
+    {
+        $cacheKey = 'search_results_' . md5($request->location . '_' . $request->destination);
+        
+        $drivers = Cache::remember($cacheKey, 60 * 5, function () use ($request) {
+            return User::where('role', 'driver')
+                ->whereHas('trips', function($query) use ($request) {
+                    $query->where('departure_location', 'LIKE', "%{$request->location}%")
+                          ->where('destination', 'LIKE', "%{$request->destination}%");
+                })
+                ->with(['trips' => function($query) use ($request) {
+                    $query->where('departure_location', 'LIKE', "%{$request->location}%")
+                          ->where('destination', 'LIKE', "%{$request->destination}%")
+                          ->where('departure_time', '>', now())
+                          ->where('available_seats', '>', 0)
+                          ->orderBy('departure_time', 'asc');
+                }, 'ratings'])
+                ->get();
+        });
 
-
-public function updateAvailability(Request $request)
-{
-     /** @var \App\Models\User $user */
-    $user = Auth::user();
-    $user->is_available = $request->is_available;
-    $user->save();
-
-    return response()->json(['success' => true, 'status' => $user->is_available]);
-
-}
-
-
-public function search(Request $request)
-{
-    $drivers = User::where('role', 'driver')
-        ->whereHas('trips', function($query) use ($request) {
-            $query->where('departur_location', 'LIKE', "%{$request->location}%")
-                  ->where('destination', 'LIKE' , "%{$request->destination}%");
-        })->get();
-
-    return view('search', compact('drivers'));
-}
+        return view('search', compact('drivers'));
+    }
 
 }

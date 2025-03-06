@@ -52,6 +52,8 @@ Route::post('/reject' , [ReservationController::class , 'rejectReservation'])->n
 
 Route::get('/trajet/show/{id}' , [ReservationController::class , 'show'])->name('show');
 
+Route::get('/myreservations' , [ReservationController::class , 'myreservations'])->name('myreservations');
+
 
 Route::post('/cancel' , [ReservationController::class , 'cancel'])->name('cancel');
 
@@ -63,8 +65,6 @@ Route::get('/searchpage/{id}' , [ReservationController::class , 'search'])->name
 
 
 
-
-Route::get('/checkout', 'App\Http\Controllers\StripeController@checkout')->name('checkout');
 Route::post('/session', 'App\Http\Controllers\StripeController@session')->name('session');
 Route::get('/success', 'App\Http\Controllers\StripeController@success')->name('success');
 
@@ -75,12 +75,12 @@ Route::get('/success', 'App\Http\Controllers\StripeController@success')->name('s
 
 
 
-Route::get('/auth/{provider}/redirect', [SocialiteController::class, 'redirect'])
+
+
+    Route::get('auth/{provider}/redirect', [SocialiteController::class, 'redirect'])
     ->name('socialite.redirect');
-Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback'])
+Route::get('auth/{provider}/callback', [SocialiteController::class, 'callback'])
     ->name('socialite.callback');
-
-
 
 
 
@@ -94,6 +94,12 @@ Route::get('/admin/users' , [AdminController::class , 'users'])->name("admin.use
 Route::get('/admin/user/{id}' , [AdminController::class , 'user'])->name("admin.user");
 
 Route::delete('/admin/user/{id}' , [AdminController::class , 'deleteUser'])->name("admin.deleteUser");
+
+Route::get('/trips' , [AdminController::class , 'trips'])->name('admin.trips');
+
+Route::get('/admin/reservations' , [AdminController::class , 'reservations'])->name('admin.reservations');
+
+Route::get('/admin/revenue' , [AdminController::class , 'revenueReport'])->name('admin.revenue');
 
 
 use Carbon\Carbon;
@@ -114,3 +120,21 @@ $user = Trip::find($id);
 dd($user->reservations);
 
 });
+
+
+use App\Http\Controllers\RatingController;
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/rate-driver/{trip_id}', [RatingController::class, 'rateDriver'])->name('ratings.rate_driver');
+    Route::get('/rate-passenger/{trip_id}/{user_id}', [RatingController::class, 'ratePassenger'])->name('ratings.rate_passenger');
+    Route::post('/ratings', [RatingController::class, 'store'])->name('ratings.store');
+    Route::put('/ratings/{id}', [RatingController::class, 'update'])->name('ratings.update');
+    Route::delete('/ratings/{id}', [RatingController::class, 'destroy'])->name('ratings.destroy');
+    Route::get('/user/{user_id}/ratings', [RatingController::class, 'userRatings'])->name('ratings.user');
+});
+
+Route::get('/user/{id}/profile', [ProfileController::class, 'show'])->name('users.profile');
+
+Route::get('/trip/{id}', [TripController::class, 'show'])->name('trip.show');
+Route::get('/trips/{id}', [TripController::class, 'show'])->name('trips.show');

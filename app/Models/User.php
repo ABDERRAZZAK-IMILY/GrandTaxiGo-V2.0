@@ -59,6 +59,27 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
         ];
     }
+
+
+
+    public function ratings()
+{
+    return $this->hasMany(Rating::class, 'user_id');
+}
+
+
+public function ratingsMade()
+{
+    return $this->hasMany(Rating::class, 'rated_by');
+}
+
+
+public function getAverageRatingAttribute()
+{
+    return $this->ratings()->avg('rating') ?: 0;
+}
 }

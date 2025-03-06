@@ -57,6 +57,17 @@
             </svg>
             <span>Continue with Facebook</span>
         </a>
+
+          <!-- Lien de redirection vers Google -->
+          <a href="{{ route('socialite.redirect', 'google') }}" class="flex items-center justify-center w-full px-4 py-2 space-x-3 text-gray-600 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 transition duration-200">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M23.766 12.277c0-.82-.07-1.64-.22-2.437H12.24v4.606h6.482c-.28 1.486-1.13 2.749-2.406 3.589v2.97h3.897c2.28-2.087 3.593-5.164 3.593-8.728z" fill="#4285F4"/>
+                <path d="M12.24 24c3.259 0 5.99-1.057 7.983-2.895l-3.897-2.97c-1.08.721-2.46 1.145-4.086 1.145-3.142 0-5.8-2.086-6.75-4.885H1.497v3.07C3.517 21.294 7.577 24 12.24 24z" fill="#34A853"/>
+                <path d="M5.49 14.395c-.242-.72-.38-1.49-.38-2.283 0-.794.138-1.563.38-2.282V6.76H1.497A11.86 11.86 0 000 12.112c0 1.915.45 3.729 1.497 5.353l3.993-3.07z" fill="#FBBC05"/>
+                <path d="M12.24 4.845c1.77 0 3.361.613 4.609 1.804l3.458-3.417C18.205 1.28 15.474 0 12.24 0 7.577 0 3.517 2.706 1.497 6.76l3.993 3.07c.95-2.799 3.608-4.985 6.75-4.985z" fill="#EA4335"/>
+            </svg>
+            <span>Continue with Google</span>
+        </a>
 	</p>
 </div>
 </x-guest-layout>

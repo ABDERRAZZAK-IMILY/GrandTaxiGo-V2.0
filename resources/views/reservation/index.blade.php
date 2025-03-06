@@ -80,10 +80,19 @@
                     <div class="mt-4">
                     <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600  font-semibold py-2 px-4 rounded-lg transition duration-300">
                         Réserver
-                    </button>
-                    </div>
-                </div>
+                    </button>                
+               
             </form>
+            @if ($trip->reservations->isNotEmpty())
+    <form action="{{ route('show', $trip->reservations->first()->id) }}" method="GET" class="mt-2">
+@endif
+                            @csrf
+                            <button type="submit" class="w-full bg-green-500 hover:bg-green-600 font-semibold py-2 px-4 rounded-lg transition duration-300">
+                                Voir les détails
+                            </button>
+                        </form>
+                        </div>
+                        </div>
         @endforeach
         </div>
     </div>

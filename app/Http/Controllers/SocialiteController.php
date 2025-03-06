@@ -3,76 +3,82 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
-
 use App\Models\User;
-
 use Illuminate\Support\Facades\Auth;
-
-
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class SocialiteController extends Controller
 {
     // Les tableaux des providers autorisés
-    protected $providers = ["facebook"];
+    protected $providers = ["facebook", "google"];
 
     # La vue pour les liens vers les providers
-    public function loginRegister () {
-    	return view("auth.register");
+    public function loginRegister()
+    {
+        return view("auth.register");
     }
 
     # redirection vers le provider
-    public function redirect (Request $request) {
+    public function redirect($provider)
+    {
+        // Log the provider for debugging
+        Log::debug('Provider received:', ['provider' => $provider]);
 
-        $provider = $request->provider;
+        // Check if provider is null or empty
+        if (!$provider) {
+            abort(404, 'Provider not specified');
+        }
 
         // On vérifie si le provider est autorisé
         if (in_array($provider, $this->providers)) {
-            return Socialite::driver($provider)->redirect(); // On redirige vers le provider
+            return Socialite::driver($provider)->redirect();
         }
-        abort(404); // Si le provider n'est pas autorisé
+
+        abort(404, 'Invalid provider');
     }
 
-    public function callback (Request $request) {
+    public function callback($provider)
+    {
+        try {
+            // Verify provider is valid
+            if (!in_array($provider, $this->providers)) {
+                abort(404, 'Invalid provider');
+            }
 
-        $provider = $request->provider;
-
-        if (in_array($provider, $this->providers)) {
-
-        	// Les informations provenant du provider
-            $data = Socialite::driver($request->provider)->user();
+            // Les informations provenant du provider
+            $data = Socialite::driver($provider)->user();
 
             # Social login - register
-            $email = $data->getEmail(); // L'adresse email
-            $name = $data->getName(); // le nom
+            $email = $data->getEmail();
+            $name = $data->getName();
 
             # 1. On récupère l'utilisateur à partir de l'adresse email
             $user = User::where("email", $email)->first();
 
             # 2. Si l'utilisateur existe
-            if (isset($user)) {
-
+            if ($user) {
                 // Mise à jour des informations de l'utilisateur
                 $user->name = $name;
                 $user->save();
-
-            # 3. Si l'utilisateur n'existe pas, on l'enregistre
             } else {
-                
-                // Enregistrement de l'utilisateur
+                # 3. Si l'utilisateur n'existe pas, on l'enregistre
                 $user = User::create([
                     'name' => $name,
-                    'email' => $email,
-                    'password' => bcrypt("emilie") // On attribue un mot de passe
+                    'password' => bcrypt(Str::random(16)) // Generate secure random password
                 ]);
             }
 
             # 4. On connecte l'utilisateur
-             Auth::login($user);
+            Auth::login($user);
 
             # 5. On redirige l'utilisateur vers /home
-            if (Auth::check()) return redirect(route('home'));
+            return redirect()->route('home');
 
-         }
-         abort(404);
+        } catch (\Exception $e) {
+            Log::error('Socialite error: ' . $e->getMessage());
+            return redirect()->route('login')
+                ->with('error', 'Authentication failed. Please try again.');
+        }
     }
 }

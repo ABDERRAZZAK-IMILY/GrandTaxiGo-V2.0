@@ -57,4 +57,21 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    /**
+     * Display the user's profile.
+     */
+    public function show($id)
+    {
+        $user = \App\Models\User::findOrFail($id);
+        
+        // الحصول على آخر 5 تقييمات للمستخدم
+        $latestRatings = \App\Models\Rating::where('user_id', $id)
+            ->with(['ratedBy', 'trip'])
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+            
+        return view('profile.show', compact('user', 'latestRatings'));
+    }
 }
