@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 use App\Events\Notification_platform;
 
@@ -201,7 +202,20 @@ class ReservationController extends Controller
     return view("reservation.show" , compact('reservation' , 'trip'));
   }
 
+
   
+  public function myReservations() {
+    $reservations = Cache::remember('user_reservations_' . Auth::id(), 60 * 5, function () {
+        return Reservation::where('user_id', Auth::id())
+            ->with('trip')
+            ->orderBy('created_at', 'desc')
+            ->get();
+    });
+
+    return view('reservation.my_reservations', compact('reservations'));
+}
+  
+
 
     /**
      * Remove the specified resource from storage.

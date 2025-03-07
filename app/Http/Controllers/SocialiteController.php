@@ -20,7 +20,7 @@ class SocialiteController extends Controller
     }
 
     # redirection vers le provider
-    public function redirect($provider)
+    public function redirect(Request $request, $provider)
     {
         // Log the provider for debugging
         Log::debug('Provider received:', ['provider' => $provider]);
@@ -38,7 +38,7 @@ class SocialiteController extends Controller
         abort(404, 'Invalid provider');
     }
 
-    public function callback($provider)
+    public function callback(Request $request, $provider)
     {
         try {
             // Verify provider is valid
@@ -65,6 +65,8 @@ class SocialiteController extends Controller
                 # 3. Si l'utilisateur n'existe pas, on l'enregistre
                 $user = User::create([
                     'name' => $name,
+                    'email' => $email,
+                    'role' => 'passenger', // Default role
                     'password' => bcrypt(Str::random(16)) // Generate secure random password
                 ]);
             }
@@ -72,13 +74,17 @@ class SocialiteController extends Controller
             # 4. On connecte l'utilisateur
             Auth::login($user);
 
-            # 5. On redirige l'utilisateur vers /home
-            return redirect()->route('home');
+            # 5. On redirige l'utilisateur vers le tableau de bord approprié
+            if ($user->role === 'driver') {
+                return redirect()->route('dashboarddriver');
+            } else {
+                return redirect()->route('dashboard');
+            }
 
         } catch (\Exception $e) {
             Log::error('Socialite error: ' . $e->getMessage());
             return redirect()->route('login')
-                ->with('error', 'Authentication failed. Please try again.');
+                ->with('error', 'فشلت عملية المصادقة. يرجى المحاولة مرة أخرى.');
         }
     }
 }

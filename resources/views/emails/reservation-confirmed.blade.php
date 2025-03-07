@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تأكيد الحجز</title>
+    <title>Reservation Confirmation</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -71,35 +71,35 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>تم تأكيد حجزك!</h1>
+            <h1>Your Reservation is Confirmed!</h1>
         </div>
         
         <div class="content">
-            <p>مرحباً {{ $reservation->user->name }}،</p>
+            <p>Hello {{ $reservation->user->name }},</p>
             
-            <p>نود إعلامك بأنه تم تأكيد حجزك للرحلة. فيما يلي تفاصيل الرحلة:</p>
+            <p>We are pleased to inform you that your trip reservation has been confirmed. Here are the trip details:</p>
             
             <div class="trip-details">
-                <p><strong>رقم الحجز:</strong> #{{ $reservation->id }}</p>
-                <p><strong>من:</strong> {{ $reservation->trip->departure_location }}</p>
-                <p><strong>إلى:</strong> {{ $reservation->trip->destination }}</p>
-                <p><strong>تاريخ المغادرة:</strong> {{ \Carbon\Carbon::parse($reservation->trip->departure_time)->format('Y-m-d H:i') }}</p>
-                <p><strong>اسم السائق:</strong> {{ $reservation->trip->driver->name }}</p>
+                <p><strong>Reservation Number:</strong> #{{ $reservation->id }}</p>
+                <p><strong>From:</strong> {{ $reservation->trip->departure_location }}</p>
+                <p><strong>To:</strong> {{ $reservation->trip->destination }}</p>
+                <p><strong>Departure Date & Time:</strong> {{ \Carbon\Carbon::parse($reservation->trip->departure_time)->format('Y-m-d H:i') }}</p>
+                <p><strong>Driver Name:</strong> {{ $reservation->trip->driver->name }}</p>
             </div>
             
-            <p>يرجى الاحتفاظ برمز QR أدناه وإظهاره للسائق عند الصعود:</p>
+            <p>Please keep the QR code below and show it to the driver when boarding:</p>
             
             <div class="qr-code">
                 <img src="{{ $message->embed(storage_path('app/public/' . $qrCodePath)) }}">
             </div>
             
-            <p>إذا كنت بحاجة إلى إلغاء الحجز أو تعديله، يرجى القيام بذلك من خلال حسابك على منصتنا.</p>
+            <p>If you need to cancel or modify your reservation, please do so through your account on our platform.</p>
             
-            <p>نتمنى لك رحلة آمنة وممتعة!</p>
+            <p>We wish you a safe and pleasant journey!</p>
         </div>
         
         <div class="footer">
-            <p>&copy; {{ date('Y') }} GrandTaxiGo. كل الحقوق محفظة لمنصاتنا </p>
+            <p>&copy; {{ date('Y') }} GrandTaxiGo. All rights reserved. </p>
         </div>
     </div>
 </body>

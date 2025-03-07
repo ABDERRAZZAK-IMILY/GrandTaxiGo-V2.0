@@ -8,12 +8,12 @@
     <div class="max-w-4xl mx-auto">
         <div class="bg-white rounded-lg shadow-lg overflow-hidden">
             <div class="bg-yellow-500 text-white px-6 py-4">
-                <h2 class="text-xl font-bold">الملف الشخصي</h2>
+                <h2 class="text-xl font-bold">Profile</h2>
             </div>
             
             <div class="p-6">
                 <div class="flex flex-col md:flex-row">
-                    <div class="md:w-1/3 mb-6 md:mb-0 md:ml-6">
+                    <div class="md:w-1/3 mb-6 md:mb-0 md:mr-6">
                         <div class="bg-gray-100 rounded-lg p-6 text-center">
                             <div class="w-24 h-24 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500 mx-auto mb-4">
                                 <i class="fas fa-user text-4xl"></i>
@@ -22,22 +22,22 @@
                             
                             @if($user->role === 'driver')
                                 <div class="bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded-full inline-block mb-2">
-                                    <i class="fas fa-car ml-1"></i> سائق
+                                    <i class="fas fa-car mr-1"></i> Driver
                                 </div>
                             @elseif($user->role === 'passenger')
                                 <div class="bg-green-100 text-green-800 text-sm font-semibold px-3 py-1 rounded-full inline-block mb-2">
-                                    <i class="fas fa-user ml-1"></i> راكب
+                                    <i class="fas fa-user mr-1"></i> Passenger
                                 </div>
                             @elseif($user->role === 'admin')
                                 <div class="bg-purple-100 text-purple-800 text-sm font-semibold px-3 py-1 rounded-full inline-block mb-2">
-                                    <i class="fas fa-user-shield ml-1"></i> مسؤول
+                                    <i class="fas fa-user-shield mr-1"></i> Admin
                                 </div>
                             @endif
                             
                             <p class="text-gray-500 mb-4">{{ $user->email }}</p>
                             
                             <div class="mb-4">
-                                <div class="text-lg font-medium mb-1">متوسط التقييم</div>
+                                <div class="text-lg font-medium mb-1">Average Rating</div>
                                 <div class="flex justify-center mb-1">
                                     @for ($i = 1; $i <= 5; $i++)
                                         <i class="fas fa-star {{ $i <= ($user->average_rating ?? 0) ? 'text-yellow-400' : 'text-gray-300' }} mx-0.5"></i>
@@ -47,7 +47,7 @@
                             </div>
                             
                             <div class="text-gray-500 text-sm">
-                                <i class="fas fa-calendar-alt ml-1"></i> انضم {{ $user->created_at->format('Y/m/d') }}
+                                <i class="fas fa-calendar-alt mr-1"></i> Joined {{ $user->created_at->format('Y/m/d') }}
                             </div>
                         </div>
                     </div>
@@ -55,26 +55,26 @@
                     <div class="md:w-2/3">
                         @if($user->role === 'driver')
                             <div class="mb-6">
-                                <h3 class="text-lg font-bold mb-3 flex items-center">
-                                    <i class="fas fa-car ml-2 text-yellow-500"></i> معلومات السائق
-                                </h3>
+                                <h4 class="text-lg font-semibold mb-3 flex items-center">
+                                    <i class="fas fa-car mr-2 text-yellow-500"></i> Driver Information
+                                </h4>
                                 <div class="bg-gray-50 rounded-lg p-4">
                                     <div class="grid grid-cols-2 gap-4">
                                         <div>
-                                            <p class="text-gray-600">رقم الهاتف:</p>
-                                            <p class="font-medium">{{ $user->phone ?? 'غير متوفر' }}</p>
+                                            <p class="text-gray-600">Phone Number:</p>
+                                            <p class="font-medium">{{ $user->driver->phone ?? 'Not provided' }}</p>
                                         </div>
                                         <div>
-                                            <p class="text-gray-600">نوع السيارة:</p>
-                                            <p class="font-medium">{{ $user->car_model ?? 'غير متوفر' }}</p>
+                                            <p class="text-gray-600">Car Type:</p>
+                                            <p class="font-medium">{{ $user->driver->car_model ?? 'Not provided' }}</p>
                                         </div>
                                         <div>
-                                            <p class="text-gray-600">رقم لوحة السيارة:</p>
-                                            <p class="font-medium">{{ $user->license_plate ?? 'غير متوفر' }}</p>
+                                            <p class="text-gray-600">License Plate:</p>
+                                            <p class="font-medium">{{ $user->driver->license_plate ?? 'Not provided' }}</p>
                                         </div>
                                         <div>
-                                            <p class="text-gray-600">سنة الخبرة:</p>
-                                            <p class="font-medium">{{ $user->years_experience ?? 'غير متوفر' }}</p>
+                                            <p class="text-gray-600">Years of Experience:</p>
+                                            <p class="font-medium">{{ $user->driver->years_experience ?? 'Not provided' }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -83,95 +83,75 @@
                         
                         <div class="mb-6">
                             <div class="flex justify-between items-center mb-3">
-                                <h3 class="text-lg font-bold flex items-center">
-                                    <i class="fas fa-star ml-2 text-yellow-500"></i> التقييمات
-                                </h3>
-                                <a href="{{ route('ratings.user', $user->id) }}" class="text-yellow-500 hover:text-yellow-700 text-sm">
-                                    عرض الكل <i class="fas fa-arrow-left mr-1"></i>
+                                <h4 class="text-lg font-semibold flex items-center">
+                                    <i class="fas fa-star mr-2 text-yellow-500"></i> Ratings
+                                </h4>
+                                <a href="{{ route('ratings.user', $user->id) }}" class="text-yellow-500 hover:text-yellow-700">
+                                    View All <i class="fas fa-arrow-right mr-1"></i>
                                 </a>
                             </div>
                             
-                            @if($latestRatings->count() > 0)
-                                <div class="space-y-4">
-                                    @foreach($latestRatings as $rating)
-                                        <div class="border border-gray-200 rounded-lg p-3 hover:shadow-sm transition">
-                                            <div class="flex justify-between">
-                                                <div>
-                                                    <div class="flex items-center">
-                                                        <span class="font-medium">{{ $rating->ratedBy->name }}</span>
-                                                        @if($rating->ratedBy->role === 'driver')
-                                                            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-0.5 rounded-full mr-2">
-                                                                سائق
-                                                            </span>
-                                                        @elseif($rating->ratedBy->role === 'passenger')
-                                                            <span class="bg-green-100 text-green-800 text-xs font-semibold px-2 py-0.5 rounded-full mr-2">
-                                                                راكب
-                                                            </span>
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                @if($latestRatings->count() > 0)
+                                    <div class="space-y-4">
+                                        @foreach($latestRatings as $rating)
+                                            <div class="border-b border-gray-200 pb-4 last:border-b-0 last:pb-0">
+                                                <div class="flex items-start">
+                                                    <div class="flex-shrink-0 mr-3">
+                                                        <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500">
+                                                            <i class="fas fa-user"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="flex items-center">
+                                                            <h5 class="font-medium">{{ $rating->ratedBy->name }}</h5>
+                                                            <div class="ml-2 flex">
+                                                                @for ($i = 1; $i <= 5; $i++)
+                                                                    <i class="fas fa-star {{ $i <= $rating->rating ? 'text-yellow-400' : 'text-gray-300' }} text-xs ml-0.5"></i>
+                                                                @endfor
+                                                            </div>
+                                                        </div>
+                                                        <p class="text-gray-500 text-sm my-1">{{ $rating->created_at->format('Y/m/d') }}</p>
+                                                        @if($rating->comment)
+                                                            <p class="text-gray-700 text-sm">{{ $rating->comment }}</p>
                                                         @endif
                                                     </div>
-                                                    <div class="flex my-1">
-                                                        @for ($i = 1; $i <= 5; $i++)
-                                                            <i class="fas fa-star {{ $i <= $rating->rating ? 'text-yellow-400' : 'text-gray-300' }} ml-1"></i>
-                                                        @endfor
-                                                    </div>
-                                                    <div class="text-sm text-gray-500">
-                                                        {{ $rating->created_at->format('Y/m/d') }}
-                                                    </div>
-                                                    @if($rating->comment)
-                                                        <p class="mt-1 text-gray-700 text-sm">{{ $rating->comment }}</p>
-                                                    @endif
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @else
-                                <div class="bg-gray-50 rounded-lg p-4 text-center text-gray-500">
-                                    لا توجد تقييمات حتى الآن
-                                </div>
-                            @endif
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <p class="text-gray-500 text-center py-4">No ratings yet</p>
+                                @endif
+                            </div>
                         </div>
                         
-                        @if($user->role === 'driver')
+                        @if($user->role === 'driver' && isset($trips) && count($trips) > 0)
                             <div>
-                                <h3 class="text-lg font-bold mb-3 flex items-center">
-                                    <i class="fas fa-route ml-2 text-yellow-500"></i> الرحلات المتاحة
-                                </h3>
-                                
-                                @php
-                                    $availableTrips = \App\Models\Trip::where('driver_id', $user->id)
-                                        ->where('status', 'active')
-                                        ->where('date', '>=', now())
-                                        ->orderBy('date')
-                                        ->take(3)
-                                        ->get();
-                                @endphp
-                                
-                                @if($availableTrips->count() > 0)
+                                <h4 class="text-lg font-semibold mb-3 flex items-center">
+                                    <i class="fas fa-route mr-2 text-yellow-500"></i> Available Trips
+                                </h4>
+                                <div class="bg-gray-50 rounded-lg p-4">
                                     <div class="space-y-3">
-                                        @foreach($availableTrips as $trip)
+                                        @foreach($trips as $trip)
                                             <a href="{{ route('trip.show', $trip->id) }}" class="block border border-gray-200 rounded-lg p-3 hover:shadow-md transition">
                                                 <div class="flex justify-between items-center">
                                                     <div>
-                                                        <div class="font-medium">{{ $trip->from }} إلى {{ $trip->to }}</div>
-                                                        <div class="text-sm text-gray-500">
-                                                            <i class="fas fa-calendar ml-1"></i> {{ $trip->date->format('Y/m/d') }}
-                                                            <span class="mx-2">|</span>
-                                                            <i class="fas fa-clock ml-1"></i> {{ $trip->time }}
+                                                        <div class="font-medium">{{ $trip->departure_location }} to {{ $trip->destination }}</div>
+                                                        <div class="text-gray-500 text-sm mt-1">
+                                                            <i class="far fa-calendar-alt mr-1"></i> {{ $trip->departure_time->format('Y/m/d H:i') }}
+                                                            <span class="mx-2">•</span>
+                                                            <i class="fas fa-user mr-1"></i> {{ $trip->available_seats }} seats available
                                                         </div>
                                                     </div>
-                                                    <div class="text-yellow-500">
-                                                        <span class="font-bold">{{ $trip->price }} درهم</span>
-                                                    </div>
+                                                    <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">
+                                                        {{ ucfirst($trip->status) }}
+                                                    </span>
                                                 </div>
                                             </a>
                                         @endforeach
                                     </div>
-                                @else
-                                    <div class="bg-gray-50 rounded-lg p-4 text-center text-gray-500">
-                                        لا توجد رحلات متاحة حالياً
-                                    </div>
-                                @endif
+                                </div>
                             </div>
                         @endif
                     </div>

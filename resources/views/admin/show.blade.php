@@ -6,9 +6,9 @@
 <div class="container mx-auto px-4 py-8">
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 flex justify-between items-center">
-            <h2 class="text-xl font-bold text-white">تفاصيل المستخدم</h2>
+            <h2 class="text-xl font-bold text-white">User Details</h2>
             <a href="{{ route('admin.users') }}" class="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-blue-50 transition">
-                العودة لقائمة المستخدمين
+                Back to Users List
             </a>
         </div>
         
@@ -24,26 +24,26 @@
                             @if($user->role == 'admin') bg-purple-100 text-purple-800
                             @elseif($user->role == 'driver') bg-green-100 text-green-800
                             @else bg-blue-100 text-blue-800 @endif">
-                            @if($user->role == 'admin') مدير
-                            @elseif($user->role == 'driver') سائق
-                            @else راكب @endif
+                            @if($user->role == 'admin') Admin
+                            @elseif($user->role == 'driver') Driver
+                            @else Passenger @endif
                         </span>
                         
                         <div class="w-full mt-6 space-y-3">
                             <div class="flex justify-between">
-                                <span class="text-gray-600">البريد الإلكتروني:</span>
+                                <span class="text-gray-600">Email:</span>
                                 <span class="font-medium">{{ $user->email }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600">تاريخ الانضمام:</span>
+                                <span class="text-gray-600">Join Date:</span>
                                 <span class="font-medium">{{ $user->created_at->format('Y-m-d') }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600">عدد الرحلات:</span>
+                                <span class="text-gray-600">Number of Trips:</span>
                                 <span class="font-medium">{{ $trips->total() }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600">متوسط التقييم:</span>
+                                <span class="text-gray-600">Average Rating:</span>
                                 <span class="font-medium flex items-center">
                                     @if($ratings->count() > 0)
                                         {{ number_format($ratings->avg('rating'), 1) }}
@@ -51,7 +51,7 @@
                                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                                         </svg>
                                     @else
-                                        لا يوجد
+                                        None
                                     @endif
                                 </span>
                             </div>
@@ -62,7 +62,7 @@
                 <div class="md:col-span-2">
                     <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
                         <div class="px-6 py-4 bg-gray-50 border-b">
-                            <h3 class="text-lg font-semibold text-gray-800">التقييمات</h3>
+                            <h3 class="text-lg font-semibold text-gray-800">Ratings</h3>
                         </div>
                         <div class="p-6">
                             @if($ratings->count() > 0)
@@ -81,7 +81,7 @@
                                                     <p class="text-gray-700">{{ $rating->comment }}</p>
                                                 </div>
                                                 <div class="text-sm text-gray-500">
-                                                    <div>بواسطة: {{ $rating->ratedBy->name }}</div>
+                                                    <div>By: {{ $rating->ratedBy->name }}</div>
                                                     <div>{{ $rating->created_at->format('Y-m-d') }}</div>
                                                 </div>
                                             </div>
@@ -98,7 +98,7 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-sm text-yellow-700">
-                                                لا توجد تقييمات لهذا المستخدم.
+                                                No ratings found for this user.
                                             </p>
                                         </div>
                                     </div>
@@ -111,7 +111,7 @@
 
             <div class="bg-white rounded-lg shadow overflow-hidden">
                 <div class="px-6 py-4 bg-gray-50 border-b">
-                    <h3 class="text-lg font-semibold text-gray-800">الرحلات</h3>
+                    <h3 class="text-lg font-semibold text-gray-800">Trips</h3>
                 </div>
                 <div class="p-6">
                     @if($trips->count() > 0)
@@ -119,20 +119,20 @@
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            رقم الرحلة
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Trip ID
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            المسار
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Route
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            التاريخ
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Date
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            الحالة
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Status
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            الإجراءات
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Actions
                                         </th>
                                     </tr>
                                 </thead>
@@ -143,22 +143,22 @@
                                             {{ $trip->id }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            {{ $trip->from_city }} إلى {{ $trip->to_city }}
+                                            {{ $trip->from_city }} to {{ $trip->to_city }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             {{ $trip->departure_time->format('Y-m-d H:i') }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             @if($trip->status == 'scheduled')
-                                                <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded">مجدولة</span>
+                                                <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded">Scheduled</span>
                                             @elseif($trip->status == 'completed')
-                                                <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">مكتملة</span>
+                                                <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">Completed</span>
                                             @elseif($trip->status == 'cancelled')
-                                                <span class="bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 rounded">ملغاة</span>
+                                                <span class="bg-red-100 text-red-800 text-xs font-semibold px-2.5 py-0.5 rounded">Cancelled</span>
                                             @endif
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a href="{{ route('trip.show', $trip->id) }}" class="text-indigo-600 hover:text-indigo-900">عرض</a>
+                                            <a href="{{ route('trip.show', $trip->id) }}" class="text-indigo-600 hover:text-indigo-900">View</a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -178,7 +178,7 @@
                                 </div>
                                 <div class="ml-3">
                                     <p class="text-sm text-yellow-700">
-                                        لم يتم العثور على أي رحلات لهذا المستخدم.
+                                        No trips found for this user.
                                     </p>
                                 </div>
                             </div>

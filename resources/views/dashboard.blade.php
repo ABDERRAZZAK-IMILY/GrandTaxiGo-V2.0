@@ -17,16 +17,16 @@
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
                     <div class="p-6 text-gray-900">
                         <h2 class="text-xl font-semibold mb-4">{{ __('messages.my_reservations') }}</h2>
-                        <!-- محتوى الحجوزات -->
+                        <!-- Reservations content -->
                     </div>
                 </div>
                 
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
                     <div class="p-6 text-gray-900">
                         <div class="flex justify-between items-center mb-4">
-                            <h2 class="text-xl font-semibold">تقييماتي</h2>
+                            <h2 class="text-xl font-semibold">My Ratings</h2>
                             <a href="{{ route('ratings.user', auth()->id()) }}" class="text-yellow-500 hover:text-yellow-700">
-                                عرض الكل <i class="fas fa-arrow-left mr-1"></i>
+                                View All <i class="fas fa-arrow-right mr-1"></i>
                             </a>
                         </div>
                         
@@ -41,10 +41,10 @@
                         
                         <div class="mb-4">
                             <div class="flex items-center mb-2">
-                                <div class="text-lg font-medium ml-2">متوسط التقييم: {{ number_format($averageRating, 1) }}/5</div>
+                                <div class="text-lg font-medium mr-2">Average Rating: {{ number_format($averageRating, 1) }}/5</div>
                                 <div class="flex">
                                     @for ($i = 1; $i <= 5; $i++)
-                                        <i class="fas fa-star {{ $i <= $averageRating ? 'text-yellow-400' : 'text-gray-300' }} ml-1"></i>
+                                        <i class="fas fa-star {{ $i <= $averageRating ? 'text-yellow-400' : 'text-gray-300' }} mr-1"></i>
                                     @endfor
                                 </div>
                             </div>
@@ -59,12 +59,12 @@
                                                 <div class="font-medium">{{ $rating->ratedBy->name }}</div>
                                                 <div class="flex my-1">
                                                     @for ($i = 1; $i <= 5; $i++)
-                                                        <i class="fas fa-star {{ $i <= $rating->rating ? 'text-yellow-400' : 'text-gray-300' }} ml-1"></i>
+                                                        <i class="fas fa-star {{ $i <= $rating->rating ? 'text-yellow-400' : 'text-gray-300' }} mr-1"></i>
                                                     @endfor
                                                 </div>
                                                 <div class="text-sm text-gray-500">
                                                     {{ $rating->created_at->format('Y/m/d') }}
-                                                    - رحلة من {{ $rating->trip->from }} إلى {{ $rating->trip->to }}
+                                                    - Trip from {{ $rating->trip->from }} to {{ $rating->trip->to }}
                                                 </div>
                                                 @if($rating->comment)
                                                     <p class="mt-2 text-gray-700">{{ $rating->comment }}</p>
@@ -76,7 +76,7 @@
                             </div>
                         @else
                             <div class="bg-gray-50 rounded-lg p-4 text-center text-gray-500">
-                                لا توجد تقييمات حتى الآن
+                                No ratings yet
                             </div>
                         @endif
                     </div>

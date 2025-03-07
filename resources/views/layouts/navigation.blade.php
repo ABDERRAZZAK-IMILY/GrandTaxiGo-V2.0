@@ -15,43 +15,43 @@
                     @auth
                         @if(Auth::user()->role === 'admin')
                             <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                                <i class="fas fa-tachometer-alt ml-1"></i> لوحة التحكم
+                                <i class="fas fa-tachometer-alt mr-1"></i> Dashboard
                             </x-nav-link>
                             <x-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')">
-                                <i class="fas fa-users ml-1"></i> المستخدمين
+                                <i class="fas fa-users mr-1"></i> Users
                             </x-nav-link>
                             <x-nav-link :href="route('admin.trips')" :active="request()->routeIs('admin.trips')">
-                                <i class="fas fa-route ml-1"></i> الرحلات
+                                <i class="fas fa-route mr-1"></i> Trips
                             </x-nav-link>
                             <x-nav-link :href="route('admin.reservations')" :active="request()->routeIs('admin.reservations')">
-                                <i class="fas fa-ticket-alt ml-1"></i> الحجوزات
+                                <i class="fas fa-ticket-alt mr-1"></i> Reservations
                             </x-nav-link>
                         @elseif(Auth::user()->role === 'driver')
                             <x-nav-link :href="route('dashboarddriver')" :active="request()->routeIs('dashboard')">
-                                <i class="fas fa-tachometer-alt ml-1"></i> لوحة التحكم
+                                <i class="fas fa-tachometer-alt mr-1"></i> Dashboard
                             </x-nav-link>
                             <x-nav-link :href="route('trip.create')" :active="request()->routeIs('trip.create')">
-                                <i class="fas fa-plus-circle ml-1"></i> إنشاء رحلة
+                                <i class="fas fa-plus-circle mr-1"></i> Create Trip
                             </x-nav-link>
                             <x-nav-link :href="route('history')" :active="request()->routeIs('history')">
-                                <i class="fas fa-history ml-1"></i> سجل الرحلات
+                                <i class="fas fa-history mr-1"></i> Trip History
                             </x-nav-link>
                         @else
                             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                                <i class="fas fa-search ml-1"></i> الرحلات المتاحة
+                                <i class="fas fa-search mr-1"></i> Available Trips
                             </x-nav-link>
                             <x-nav-link :href="route('myreservations')" :active="request()->routeIs('dashboard')">
-                                <i class="fas fa-ticket-alt ml-1"></i> حجوزاتي
+                                <i class="fas fa-ticket-alt mr-1"></i> My Reservations
                             </x-nav-link>
                         @endif
                     @endauth
                     
                     @guest
                         <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
-                            <i class="fas fa-sign-in-alt ml-1"></i> تسجيل الدخول
+                            <i class="fas fa-sign-in-alt mr-1"></i> Login
                         </x-nav-link>
                         <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
-                            <i class="fas fa-user-plus ml-1"></i> التسجيل
+                            <i class="fas fa-user-plus mr-1"></i> Register
                         </x-nav-link>
                     @endguest
                 </div>
@@ -75,22 +75,22 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            <i class="fas fa-user ml-1"></i> الملف الشخصي
+                            <i class="fas fa-user mr-1"></i> Profile
                         </x-dropdown-link>
                         
                         <x-dropdown-link :href="route('ratings.user', Auth::id())">
-                            <i class="fas fa-star ml-1"></i> تقييماتي
+                            <i class="fas fa-star mr-1"></i> My Ratings
                         </x-dropdown-link>
                         
                         @if(Auth::user()->role === 'passenger')
                             <x-dropdown-link :href="route('dashboard')">
-                                <i class="fas fa-ticket-alt ml-1"></i> حجوزاتي
+                                <i class="fas fa-ticket-alt mr-1"></i> My Reservations
                             </x-dropdown-link>
                         @endif
 
                         @if(Auth::user()->role === 'driver')
                             <x-dropdown-link :href="route('history')">
-                                <i class="fas fa-history ml-1"></i> سجل الرحلات
+                                <i class="fas fa-history mr-1"></i> Trip History
                             </x-dropdown-link>
                         @endif
 
@@ -101,7 +101,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                <i class="fas fa-sign-out-alt ml-1"></i> تسجيل الخروج
+                                <i class="fas fa-sign-out-alt mr-1"></i> Logout
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -127,46 +127,46 @@
             @auth
                 @if(Auth::user()->role === 'admin')
                     <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                        <i class="fas fa-tachometer-alt ml-1"></i> لوحة التحكم
+                        <i class="fas fa-tachometer-alt mr-1"></i> Dashboard
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')">
-                        <i class="fas fa-users ml-1"></i> المستخدمين
+                        <i class="fas fa-users mr-1"></i> Users
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.trips')" :active="request()->routeIs('admin.trips')">
-                        <i class="fas fa-route ml-1"></i> الرحلات
+                        <i class="fas fa-route mr-1"></i> Trips
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.reservations')" :active="request()->routeIs('admin.reservations')">
-                        <i class="fas fa-ticket-alt ml-1"></i> الحجوزات
+                        <i class="fas fa-ticket-alt mr-1"></i> Reservations
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.revenue')" :active="request()->routeIs('admin.revenue')">
-                        <i class="fas fa-chart-line ml-1"></i> الإيرادات
+                        <i class="fas fa-chart-line mr-1"></i> Revenue
                     </x-responsive-nav-link>
                 @elseif(Auth::user()->role === 'driver')
                     <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        <i class="fas fa-tachometer-alt ml-1"></i> لوحة التحكم
+                        <i class="fas fa-tachometer-alt mr-1"></i> Dashboard
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('trip.create')" :active="request()->routeIs('trip.create')">
-                        <i class="fas fa-plus-circle ml-1"></i> إنشاء رحلة
+                        <i class="fas fa-plus-circle mr-1"></i> Create Trip
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('history')" :active="request()->routeIs('history')">
-                        <i class="fas fa-history ml-1"></i> سجل الرحلات
+                        <i class="fas fa-history mr-1"></i> Trip History
                     </x-responsive-nav-link>
                 @else
                     <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        <i class="fas fa-search ml-1"></i> الرحلات المتاحة
+                        <i class="fas fa-search mr-1"></i> Available Trips
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        <i class="fas fa-ticket-alt ml-1"></i> حجوزاتي
+                        <i class="fas fa-ticket-alt mr-1"></i> My Reservations
                     </x-responsive-nav-link>
                 @endif
             @endauth
             
             @guest
                 <x-responsive-nav-link :href="route('login')" :active="request()->routeIs('login')">
-                    <i class="fas fa-sign-in-alt ml-1"></i> تسجيل الدخول
+                    <i class="fas fa-sign-in-alt mr-1"></i> Login
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('register')" :active="request()->routeIs('register')">
-                    <i class="fas fa-user-plus ml-1"></i> التسجيل
+                    <i class="fas fa-user-plus mr-1"></i> Register
                 </x-responsive-nav-link>
             @endguest
         </div>
@@ -181,22 +181,22 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    <i class="fas fa-user ml-1"></i> الملف الشخصي
+                    <i class="fas fa-user mr-1"></i> Profile
                 </x-responsive-nav-link>
                 
                 <x-responsive-nav-link :href="route('ratings.user', Auth::id())">
-                    <i class="fas fa-star ml-1"></i> تقييماتي
+                    <i class="fas fa-star mr-1"></i> My Ratings
                 </x-responsive-nav-link>
                 
                 @if(Auth::user()->role === 'passenger')
                     <x-responsive-nav-link :href="route('dashboard')">
-                        <i class="fas fa-ticket-alt ml-1"></i> حجوزاتي
+                        <i class="fas fa-ticket-alt mr-1"></i> My Reservations
                     </x-responsive-nav-link>
                 @endif
 
                 @if(Auth::user()->role === 'driver')
                     <x-responsive-nav-link :href="route('history')">
-                        <i class="fas fa-history ml-1"></i> سجل الرحلات
+                        <i class="fas fa-history mr-1"></i> Trip History
                     </x-responsive-nav-link>
                 @endif
 
@@ -207,7 +207,7 @@
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        <i class="fas fa-sign-out-alt ml-1"></i> تسجيل الخروج
+                        <i class="fas fa-sign-out-alt mr-1"></i> Logout
                     </x-responsive-nav-link>
                 </form>
             </div>

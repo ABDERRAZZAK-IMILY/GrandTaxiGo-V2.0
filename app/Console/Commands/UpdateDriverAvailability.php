@@ -10,7 +10,7 @@ use Carbon\Carbon;
 class UpdateDriverAvailability extends Command
 {
     protected $signature = 'drivers:update-availability';
-    protected $description = 'Met à jour les disponibilités des chauffeurs en fonction de leurs trajets en cours et à venir';
+    protected $description = 'تحديث توافر السائقين';
 
     public function __construct()
     {
@@ -43,6 +43,6 @@ class UpdateDriverAvailability extends Command
             $driver->save();
         }
 
-        $this->info('Les disponibilités des chauffeurs ont été mises à jour avec succès.');
+        $this->info('نجاح');
     }
 }

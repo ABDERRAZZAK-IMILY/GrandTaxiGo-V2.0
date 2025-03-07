@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="ltr">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -83,26 +83,26 @@
                         <div class="mb-4 md:mb-0">
                             <div class="flex items-center">
                                 <span class="text-2xl font-bold mr-2">GrandTaxiGo</span>
-                                <span>&copy; {{ date('Y') }} {{ app()->getLocale() == 'ar' ? 'جميع الحقوق محفوظة' : 'All rights reserved' }}.</span>
+                                <span>&copy; {{ date('Y') }} All rights reserved.</span>
                             </div>
                         </div>
-                        <div class="flex space-x-6 rtl:space-x-reverse">
+                        <div class="flex space-x-6">
                             <a href="#" class="hover:text-white transition flex items-center">
-                                <i class="fas fa-file-contract ml-1"></i>
-                                {{ app()->getLocale() == 'ar' ? 'الشروط والأحكام' : 'Terms' }}
+                                <i class="fas fa-file-contract mr-1"></i>
+                                Terms
                             </a>
                             <a href="#" class="hover:text-white transition flex items-center">
-                                <i class="fas fa-shield-alt ml-1"></i>
-                                {{ app()->getLocale() == 'ar' ? 'سياسة الخصوصية' : 'Privacy' }}
+                                <i class="fas fa-shield-alt mr-1"></i>
+                                Privacy
                             </a>
                             <a href="#" class="hover:text-white transition flex items-center">
-                                <i class="fas fa-envelope ml-1"></i>
-                                {{ app()->getLocale() == 'ar' ? 'اتصل بنا' : 'Contact' }}
+                                <i class="fas fa-envelope mr-1"></i>
+                                Contact
                             </a>
                         </div>
                     </div>
                     <div class="mt-4 text-center text-yellow-300 text-sm">
-                        <p>{{ app()->getLocale() == 'ar' ? 'تطبيق GrandTaxiGo - الحل الأمثل للتنقل في المغرب' : 'GrandTaxiGo App - The best transportation solution in Morocco' }}</p>
+                        <p>GrandTaxiGo App - The best transportation solution in Morocco</p>
                     </div>
                 </div>
             </footer>
