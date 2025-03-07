@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<script src="https://cdn.tailwindcss.com"></script>
+
 <div class="container mx-auto px-4 py-8">
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <div class="px-6 py-4 bg-gray-50 border-b flex justify-between items-center">

@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<script src="https://cdn.tailwindcss.com"></script>
+
 <div class="container mx-auto px-4 py-8">
     <div class="max-w-2xl mx-auto">
         <div class="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -14,15 +16,15 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <p class="text-gray-600">من:</p>
-                            <p class="font-medium">{{ $trip->from }}</p>
+                            <p class="font-medium">{{ $trip->departure_location }}</p>
                         </div>
                         <div>
                             <p class="text-gray-600">إلى:</p>
-                            <p class="font-medium">{{ $trip->to }}</p>
+                            <p class="font-medium">{{ $trip->destination }}</p>
                         </div>
                         <div>
                             <p class="text-gray-600">التاريخ:</p>
-                            <p class="font-medium">{{ $trip->date->format('Y/m/d') }}</p>
+                            <p class="font-medium">{{ $trip->departure_time }}</p>
                         </div>
                         <div>
                             <p class="text-gray-600">السائق:</p>
@@ -84,12 +86,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const input = item.querySelector('input');
         const label = item.querySelector('label');
         
-        // تحديث النجوم عند تحميل الصفحة
         if (input.checked) {
             updateStars(parseInt(input.value));
         }
         
-        // تحديث النجوم عند النقر
         label.addEventListener('click', function() {
             updateStars(parseInt(this.dataset.rating));
         });

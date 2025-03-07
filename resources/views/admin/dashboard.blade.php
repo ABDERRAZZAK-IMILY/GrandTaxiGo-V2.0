@@ -7,19 +7,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <div class="container mx-auto px-4 py-8">
-    <!-- عنوان لوحة التحكم -->
     <div class="flex items-center justify-between mb-6">
         <h1 class="text-2xl font-bold text-gray-800">لوحة تحكم المسؤول</h1>
-        <div>
-            <a href="{{ route('admin.revenue') }}" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">
-                <i class="fas fa-chart-line mr-1"></i> تقرير الإيرادات
-            </a>
-        </div>
+        
     </div>
 
-    <!-- بطاقات الإحصائيات -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <!-- بطاقة إجمالي المستخدمين -->
+
         <div class="bg-white rounded-lg shadow-md overflow-hidden border-r-4 border-blue-500">
             <div class="p-4">
                 <div class="flex items-center justify-between">
@@ -37,7 +31,6 @@
             </div>
         </div>
 
-        <!-- بطاقة الرحلات المكتملة -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden border-r-4 border-green-500">
             <div class="p-4">
                 <div class="flex items-center justify-between">
@@ -55,7 +48,6 @@
             </div>
         </div>
 
-        <!-- بطاقة الإيرادات -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden border-r-4 border-cyan-500">
             <div class="p-4">
                 <div class="flex items-center justify-between">
@@ -73,7 +65,6 @@
             </div>
         </div>
 
-        <!-- بطاقة السائقين النشطين -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden border-r-4 border-yellow-500">
             <div class="p-4">
                 <div class="flex items-center justify-between">
@@ -92,9 +83,7 @@
         </div>
     </div>
 
-    <!-- صف المحتوى -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-        <!-- الرحلات الأخيرة -->
         <div class="lg:col-span-8">
             <div class="bg-white rounded-lg shadow-md overflow-hidden mb-4">
                 <div class="px-4 py-3 flex items-center justify-between border-b">
@@ -152,7 +141,6 @@
                 </div>
             </div>
             
-            <!-- إحصائيات الرحلات حسب المدينة -->
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="px-4 py-3 border-b">
                     <h6 class="text-lg font-bold text-blue-500">الرحلات حسب المدينة</h6>
@@ -165,7 +153,6 @@
             </div>
         </div>
 
-        <!-- توزيع التقييمات والحجوزات حسب اليوم -->
         <div class="lg:col-span-4">
             <div class="bg-white rounded-lg shadow-md overflow-hidden mb-4">
                 <div class="px-4 py-3 border-b">
@@ -186,25 +173,13 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- الحجوزات حسب اليوم -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <div class="px-4 py-3 border-b">
-                    <h6 class="text-lg font-bold text-blue-500">الحجوزات حسب اليوم</h6>
-                </div>
-                <div class="p-4">
-                    <div class="pt-4 h-64">
-                        <canvas id="reservationsByDayChart"></canvas>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // رسم بياني للرحلات حسب المدينة
+
         var tripsByCityCtx = document.getElementById("tripsByCityChart").getContext('2d');
         var tripsByCityData = @json($stats['trips']['by_city'] ?? []);
         
@@ -234,13 +209,10 @@
             }
         });
         
-        // رسم بياني لتوزيع التقييمات
         var ratingsCtx = document.getElementById("ratingsDistributionChart").getContext('2d');
         
-        // بيانات افتراضية للتقييمات
         var ratingsData = [0, 0, 0, 0, 0];
         
-        // محاولة استخدام البيانات الفعلية إذا كانت متوفرة
         @php
             $ratingDistribution = \App\Models\Rating::select('rating', DB::raw('COUNT(*) as count'))
                 ->groupBy('rating')
@@ -267,11 +239,11 @@
                 datasets: [{
                     data: ratingsData,
                     backgroundColor: [
-                        '#ef4444', // أحمر
-                        '#f97316', // برتقالي
-                        '#f59e0b', // أصفر
-                        '#10b981', // أخضر فاتح
-                        '#059669'  // أخضر غامق
+                        '#ef4444', 
+                        '#f97316', 
+                        '#f59e0b', 
+                        '#10b981', 
+                        '#059669'  
                     ],
                     hoverBackgroundColor: [
                         '#dc2626',
@@ -295,23 +267,7 @@
             }
         });
         
-        // رسم بياني للحجوزات حسب اليوم
-        var reservationsByDayCtx = document.getElementById("reservationsByDayChart").getContext('2d');
-        var reservationsByDayData = @json($stats['reservations']['by_day'] ?? []);
-        
-        // ترتيب أيام الأسبوع
-        var daysOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        var daysArabic = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
-        
-        // تحويل البيانات إلى مصفوفة مرتبة
-        var sortedDays = [];
-        var sortedCounts = [];
-        
-        daysOrder.forEach(function(day, index) {
-            sortedDays.push(daysArabic[index]);
-            sortedCounts.push(reservationsByDayData[day] || 0);
-        });
-        
+      
         new Chart(reservationsByDayCtx, {
             type: 'line',
             data: {

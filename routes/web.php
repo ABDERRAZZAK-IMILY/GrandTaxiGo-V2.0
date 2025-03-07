@@ -138,3 +138,18 @@ Route::get('/user/{id}/profile', [ProfileController::class, 'show'])->name('user
 
 Route::get('/trip/{id}', [TripController::class, 'show'])->name('trip.show');
 Route::get('/trips/{id}', [TripController::class, 'show'])->name('trips.show');
+
+
+
+
+use App\Events\Notification_platform;
+
+Route::get('/notfy' , function(){
+
+    event(new Notification_platform());             
+
+} );
+
+
+
+Route::get('/test' , [ReservationController::class , 'qrtest']);

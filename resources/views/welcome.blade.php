@@ -291,6 +291,15 @@
     mobileMenuButton.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
     });
+
+
+
+    
+ window.Echo.channel('notification')
+    .listen('create', (e) => {
+        alert(e.notification);
+    });
+
   </script>
 </body>
 </html>

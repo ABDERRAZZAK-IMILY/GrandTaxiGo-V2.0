@@ -48,7 +48,7 @@
                                                 @endif
                                             </div>
                                             
-                                            @if (Auth::id() === $rating->rated_by || Auth::user()->isAdmin())
+                                            @if (Auth::id() === $rating->rated_by)
                                                 <div>
                                                     <form action="{{ route('ratings.destroy', $rating->id) }}" method="POST">
                                                         @csrf

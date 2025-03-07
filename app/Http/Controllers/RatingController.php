@@ -18,7 +18,7 @@ class RatingController extends Controller
         $trip = Trip::with('driver')->findOrFail($trip_id);
         $reservation = Reservation::where('trip_id', $trip_id)
             ->where('user_id', Auth::id())
-            ->where('status', 'completed')
+            ->where('status', 'accepted')
             ->firstOrFail();
 
         $existingRating = Rating::where('trip_id', $trip_id)

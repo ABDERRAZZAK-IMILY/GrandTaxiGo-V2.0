@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<script src="https://cdn.tailwindcss.com"></script>
+
 <div class="container mx-auto px-4 py-8">
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 flex justify-between items-center">
@@ -11,7 +13,6 @@
         </div>
         
         <div class="p-6">
-            <!-- فلتر الحالة -->
             <div class="mb-6 bg-gray-50 p-4 rounded-lg">
                 <form method="GET" action="{{ route('admin.reservations') }}" class="flex flex-wrap gap-4">
                     <div class="flex-1 min-w-[200px]">
@@ -32,7 +33,6 @@
                 </form>
             </div>
 
-            <!-- جدول الحجوزات -->
             @if($reservations->count() > 0)
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">

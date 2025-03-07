@@ -6,22 +6,15 @@ use Carbon\Carbon;
 
 use App\Mail\ReservationConfirmed;
 use Illuminate\Support\Facades\Mail;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
+use App\Events\Notification_platform;
+
 use App\Models\Reservation;
 use App\Models\Trip;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
-use BaconQrCode\Renderer\Image\GdRenderer;
-use BaconQrCode\Renderer\RendererStyle\RendererStyle;
-use BaconQrCode\Writer;
-use BaconQrCode\Encoder\Encoder;
-use App\Helpers\GdImageBackEnd;
-use BaconQrCode\Renderer\ImageRenderer;
-use BaconQrCode\Renderer\Color\Rgb;
-
 class ReservationController extends Controller
 {
     /**
@@ -29,15 +22,11 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $trips = Cache::remember('available_trips', 60 * 5, function () {
-            return Trip::where('departure_time', '>', now())
-                ->where('available_seats', '>', 0)
-                ->with('driver')
-                ->orderBy('departure_time', 'asc')
-                ->get();
-        });
+        $trips =   Trip::all();
 
-        return view('reservation.index', compact('trips'));
+        // $driver = User::where('role', 'driver')->get();
+
+        return view('reservation.index' , compact('trips'));
     }
 
     /**
@@ -53,45 +42,31 @@ class ReservationController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $seats = $request['available_seats'];
+{
+    $seats = $request['available_seats'];
 
-        $data = $request->validate([
-            'trip_id' => 'required|integer'
-        ]);
+    $data = $request->validate([
+        'trip_id' => 'required|integer'
+    ]);
 
-        $data['user_id'] = Auth::id();
+    $data['user_id'] = Auth::id();
 
-        if ($seats > 0) {
-            if (Reservation::create($data)) {
-                $seats--;
+    if ($seats > 0) {
+        if (Reservation::create($data)) {
+            $seats--;
 
-                $trip = Trip::find($data['trip_id']);
-                if ($trip) {
-                    $trip->available_seats = $seats;
-                    $trip->save();
-                }
-               
-                Cache::forget('available_trips');
-                Cache::forget('user_reservations_' . Auth::id());
-                
-                return redirect()->back()->with('success', 'Reservation created successfully');
+            $trip = Trip::find($data['trip_id']);
+            if ($trip) {
+                $trip->available_seats = $seats;
+                $trip->save();
             }
+           
+            return redirect()->back()->with('success', 'Reservation created successfully');
         }
-
-        return redirect()->back()->with('error', 'No available seats left');
     }
 
-  public function myReservations() {
-        $reservations = Cache::remember('user_reservations_' . Auth::id(), 60 * 5, function () {
-            return Reservation::where('user_id', Auth::id())
-                ->with('trip')
-                ->orderBy('created_at', 'desc')
-                ->get();
-        });
-
-        return view('reservation.my_reservations', compact('reservations'));
-  }
+    return redirect()->back()->with('error', 'No available seats left');
+}
 
 
     /**
@@ -136,35 +111,21 @@ class ReservationController extends Controller
                 'date' => $reservation->trip->departure_time,
             ]);
 
-            $renderer = new ImageRenderer(
-                new RendererStyle(200),
-                new GdImageBackEnd('png')
-            );
-            $writer = new Writer($renderer);
-            $qrCode = $writer->writeString($reservationData);
+            $qrCode = QrCode::format('png')
+            ->size(200)
+            ->generate($reservationData);
 
-            if (!Storage::disk('public')->exists('qrcodes')) {
-                Storage::disk('public')->makeDirectory('qrcodes');
-            }
-            
             $qrCodePath = 'qrcodes/reservation-' . $reservation->id . '.png';
             Storage::disk('public')->put($qrCodePath, $qrCode);
 
-            Mail::to($reservation->user->email)->send(new ReservationConfirmed($reservation, $qrCodePath));
-
-
+           Mail::to($reservation->user->email)->send(new ReservationConfirmed($reservation, $qrCodePath));
 
 
              $reservation->status = "accepted";
              $reservation->save();
 
          
-             
 
-             Cache::forget('available_trips');
-             Cache::forget('user_reservations_' . $reservation->user_id);
-             Cache::forget('driver_trips_' . $reservation->trip->driver_id);
-             
              return redirect()->back()->with('success', 'Reservation accepted successfully');
          } else {
              return redirect()->back()->with('error', 'Reservation not found');
@@ -192,9 +153,6 @@ class ReservationController extends Controller
          $reservation->status = "cancelled";
          $reservation->save();
      
-         Cache::forget('user_reservations_' . $reservation->user_id);
-         Cache::forget('driver_trips_' . $reservation->trip->driver_id);
-         
          return back()->with('success', 'Reservation successfully canceled.');
      }
 
@@ -232,10 +190,6 @@ class ReservationController extends Controller
          $reservation->status = "cancelled";
          $reservation->save();
      
-         Cache::forget('available_trips');
-         Cache::forget('user_reservations_' . $reservation->user_id);
-         Cache::forget('driver_trips_' . $reservation->trip->driver_id);
-         
          return back()->with('success', 'Reservation successfully cancelled.');
      }
 
