@@ -124,8 +124,6 @@ class ReservationController extends Controller
              $reservation->status = "accepted";
              $reservation->save();
 
-         
-
              return redirect()->back()->with('success', 'Reservation accepted successfully');
          } else {
              return redirect()->back()->with('error', 'Reservation not found');

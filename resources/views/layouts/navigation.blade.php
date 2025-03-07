@@ -26,11 +26,8 @@
                             <x-nav-link :href="route('admin.reservations')" :active="request()->routeIs('admin.reservations')">
                                 <i class="fas fa-ticket-alt ml-1"></i> الحجوزات
                             </x-nav-link>
-                            <x-nav-link :href="route('admin.revenue')" :active="request()->routeIs('admin.revenue')">
-                                <i class="fas fa-chart-line ml-1"></i> الإيرادات
-                            </x-nav-link>
                         @elseif(Auth::user()->role === 'driver')
-                            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            <x-nav-link :href="route('dashboarddriver')" :active="request()->routeIs('dashboard')">
                                 <i class="fas fa-tachometer-alt ml-1"></i> لوحة التحكم
                             </x-nav-link>
                             <x-nav-link :href="route('trip.create')" :active="request()->routeIs('trip.create')">

@@ -8,6 +8,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 
-Broadcast::channel('notification', function ($user) {
+Broadcast::channel('notification', function () {
     return true;
 });

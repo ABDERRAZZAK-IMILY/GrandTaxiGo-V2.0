@@ -16,7 +16,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboarddriver', [TripController::class, 'index'])->middleware(['auth', 'verified'])->middleware('role:driver')->name('dashboard');
+Route::get('/dashboarddriver', [TripController::class, 'index'])->middleware(['auth', 'verified'])->middleware('role:driver')->name('dashboarddriver');
 
 Route::get(('/dashboardpassenger') , [ReservationController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -32,7 +32,7 @@ require __DIR__.'/auth.php';
 
 Route::get('/lop', [TripController::class, 'index'])->name('trip.index')->middleware('auth');
 Route::get('/lop/create', [TripController::class, 'create'])->name('trip.create')->middleware('auth');
-Route::post('/lop', [TripController::class, 'store'])->middleware('role:driver')->name('trip.store')->middleware('auth');
+Route::post('/lop', [TripController::class, 'store'])->name('trip.store')->middleware('role:driver')->middleware('auth');
 
 
 
@@ -152,4 +152,3 @@ Route::get('/notfy' , function(){
 
 
 
-Route::get('/test' , [ReservationController::class , 'qrtest']);

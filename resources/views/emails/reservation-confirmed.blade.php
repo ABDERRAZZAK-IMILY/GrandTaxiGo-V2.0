@@ -85,13 +85,12 @@
                 <p><strong>إلى:</strong> {{ $reservation->trip->destination }}</p>
                 <p><strong>تاريخ المغادرة:</strong> {{ \Carbon\Carbon::parse($reservation->trip->departure_time)->format('Y-m-d H:i') }}</p>
                 <p><strong>اسم السائق:</strong> {{ $reservation->trip->driver->name }}</p>
-                <p><strong>عدد المقاعد:</strong> {{ $reservation->number_of_seats }}</p>
             </div>
             
             <p>يرجى الاحتفاظ برمز QR أدناه وإظهاره للسائق عند الصعود:</p>
             
             <div class="qr-code">
-                <img src="{{ $message->embed(storage_path('app/public/' . $qrCodePath)) }}" alt="رمز QR للحجز">
+                <img src="{{ $message->embed(storage_path('app/public/' . $qrCodePath)) }}">
             </div>
             
             <p>إذا كنت بحاجة إلى إلغاء الحجز أو تعديله، يرجى القيام بذلك من خلال حسابك على منصتنا.</p>
@@ -100,7 +99,7 @@
         </div>
         
         <div class="footer">
-            <p>&copy; {{ date('Y') }} GrandTaxiGo. جميع الحقوق محفوظة.</p>
+            <p>&copy; {{ date('Y') }} GrandTaxiGo. كل الحقوق محفظة لمنصاتنا </p>
         </div>
     </div>
 </body>
